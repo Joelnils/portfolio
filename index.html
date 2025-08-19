@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joel - JavaScript Developer Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="#" class="logo">Joel.dev</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#work">Work</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>JavaScript Developer Building <span class="hero-highlight">Modern Solutions</span></h1>
+                <p>I create dynamic web applications with clean, efficient JavaScript code. From interactive UIs to full-stack solutions, I turn ideas into powerful digital experiences.</p>
+                <div class="hero-cta">
+                    <a href="#contact" class="cta-primary">Start Your Project</a>
+                    <a href="#work" class="cta-secondary">View My Work →</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-image">
+                    💻
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="work" class="portfolio">
+        <div class="portfolio-container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Featured Project</h2>
+                <p class="section-subtitle">Showcasing my JavaScript development skills through real-world applications</p>
+            </div>
+            <div class="portfolio-grid">
+                <div class="project-card fade-in">
+                    <div class="project-image"></div>
+                    <div class="project-content">
+                        <h3 class="project-title">AI Storybook Creator</h3>
+                        <p class="project-description">A full-stack JavaScript application that generates personalized children's stories using AI. Built with modern ES6+, features dynamic DOM manipulation, API integration, and responsive design patterns.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Vanilla JavaScript</span>
+                            <span class="tech-tag">ES6+ Features</span>
+                            <span class="tech-tag">API Integration</span>
+                            <span class="tech-tag">DOM Manipulation</span>
+                        </div>
+                        <div style="margin-top: 1.5rem;">
+                            <a href="projects/storybook/index.html" target="_blank" style="background: #009DE0; color: white; padding: 0.8rem 1.5rem; text-decoration: none; border-radius: 25px; font-weight: 500; display: inline-block; transition: all 0.3s ease;">
+                                🚀 View Live Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="services-container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">JavaScript Development Services</h2>
+                <p class="section-subtitle">Specialized in modern JavaScript development, from frontend interactions to full-stack applications</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-icon">⚡</div>
+                    <h3 class="service-title">Interactive Web Applications</h3>
+                    <p class="service-description">Dynamic, responsive web apps built with vanilla JavaScript and modern ES6+ features. From DOM manipulation to complex state management, creating engaging user experiences.</p>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">🔗</div>
+                    <h3 class="service-title">API Integration & Data Handling</h3>
+                    <p class="service-description">Expert in working with REST APIs, handling asynchronous operations, and managing data flow. Experience with fetch API, promises, and modern async/await patterns.</p>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">🚀</div>
+                    <h3 class="service-title">Modern JavaScript Solutions</h3>
+                    <p class="service-description">Clean, maintainable code using latest JavaScript features. From ES6 modules to async programming, building scalable applications with industry best practices.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="contact-container">
+            <div class="contact-content">
+                <div class="contact-info fade-in">
+                    <h2>Let's Build Something Amazing</h2>
+                    <p>I'm a JavaScript developer actively seeking new opportunities and exciting projects. Whether you're looking to hire a dedicated developer or need help bringing your ideas to life, I'd love to connect!</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div>
+                                <div style="font-weight: 500;">Email</div>
+                                <div style="color: #666;">joel.fredriksson91@hotmail.se</div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">⚡</div>
+                            <div>
+                                <div style="font-weight: 500;">Response Time</div>
+                                <div style="color: #666;">Within 24 hours</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form fade-in">
+                    <form name="contact" method="POST" data-netlify="true">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="company">Company</label>
+                            <input type="text" id="company" name="company">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Project Details</label>
+                            <textarea id="message" name="message" placeholder="Tell me about your job opening, project idea, or collaboration opportunity. I'd love to hear about the JavaScript skills you're looking for..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-button">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Joel.dev. Building the web with JavaScript, one project at a time.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
