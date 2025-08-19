@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     fadeElements.forEach(el => observer.observe(el));
 });
 
-// Form submission handler
+// Form submission handler for Netlify
 document.querySelector('form').addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -40,7 +40,6 @@ document.querySelector('form').addEventListener('submit', function(e) {
     const formData = new FormData(this);
     const name = formData.get('name');
     const email = formData.get('email');
-    const company = formData.get('company');
     const message = formData.get('message');
     
     // Simple validation
@@ -49,20 +48,47 @@ document.querySelector('form').addEventListener('submit', function(e) {
         return;
     }
     
-    // Show success message
+    // Show loading state
     const submitButton = this.querySelector('.submit-button');
     const originalText = submitButton.textContent;
-    submitButton.textContent = 'Message Sent! ✓';
-    submitButton.style.background = '#10b981';
+    submitButton.textContent = 'Sending...';
+    submitButton.disabled = true;
     
-    // Reset form
-    this.reset();
-    
-    // Reset button after 3 seconds
-    setTimeout(() => {
-        submitButton.textContent = originalText;
-        submitButton.style.background = '#009DE0';
-    }, 3000);
+    // Submit to Netlify
+    fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData).toString()
+    })
+    .then(() => {
+        // Show success message
+        submitButton.textContent = 'Message Sent! ✓';
+        submitButton.style.background = '#10b981';
+        
+        // Reset form
+        this.reset();
+        
+        // Reset button after 3 seconds
+        setTimeout(() => {
+            submitButton.textContent = originalText;
+            submitButton.style.background = '#009DE0';
+            submitButton.disabled = false;
+        }, 3000);
+    })
+    .catch((error) => {
+        // Show error message
+        submitButton.textContent = 'Error - Try Again';
+        submitButton.style.background = '#ef4444';
+        
+        // Reset button after 3 seconds
+        setTimeout(() => {
+            submitButton.textContent = originalText;
+            submitButton.style.background = '#009DE0';
+            submitButton.disabled = false;
+        }, 3000);
+        
+        console.error('Form submission error:', error);
+    });
 });
 
 // Header background on scroll

@@ -122,7 +122,7 @@
                     </div>
                 </div>
                 <div class="contact-form fade-in">
-                    <form name="contact" method="POST" data-netlify="true">
+                    <form name="contact" method="POST" data-netlify="true" action="/success.html">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" id="name" name="name" required>
@@ -138,6 +138,10 @@
                         <div class="form-group">
                             <label for="message">Project Details</label>
                             <textarea id="message" name="message" placeholder="Tell me about your job opening, project idea, or collaboration opportunity. I'd love to hear about the JavaScript skills you're looking for..." required></textarea>
+                        </div>
+                        <!-- Honeypot field for spam protection -->
+                        <div style="display: none;">
+                            <label>Don't fill this out: <input name="bot-field" /></label>
                         </div>
                         <button type="submit" class="submit-button">Send Message</button>
                     </form>
