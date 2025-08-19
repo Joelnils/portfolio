@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OG Image Template</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 1200px;
+            height: 630px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container {
+            padding: 80px;
+            height: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: #009DE0;
+            margin-bottom: 40px;
+        }
+        
+        .title {
+            font-size: 64px;
+            font-weight: 700;
+            color: #1a202c;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+        
+        .highlight {
+            color: #009DE0;
+        }
+        
+        .description {
+            font-size: 24px;
+            font-weight: 400;
+            color: #4a5568;
+            line-height: 1.4;
+            margin-bottom: 40px;
+            max-width: 800px;
+        }
+        
+        .tags {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            padding: 12px 24px;
+            border-radius: 22px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #475569;
+        }
+        
+        .laptop {
+            position: absolute;
+            right: 150px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 120px;
+            opacity: 0.3;
+        }
+        
+        .cta {
+            position: absolute;
+            bottom: 80px;
+            left: 80px;
+            background: #009DE0;
+            color: white;
+            padding: 20px 40px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 157, 224, 0.3);
+        }
+        
+        .domain {
+            position: absolute;
+            bottom: 80px;
+            right: 80px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #4a5568;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">Joel.dev</div>
+        
+        <div class="title">
+            JavaScript Developer Building<br>
+            <span class="highlight">Modern Solutions</span>
+        </div>
+        
+        <div class="description">
+            I create dynamic web applications with clean, efficient JavaScript code.<br>
+            From interactive UIs to full-stack solutions, I turn ideas into powerful digital experiences.
+        </div>
+        
+        <div class="tags">
+            <div class="tag">Vanilla JavaScript</div>
+            <div class="tag">ES6+ Features</div>
+            <div class="tag">API Integration</div>
+            <div class="tag">DOM Manipulation</div>
+        </div>
+        
+        <div class="laptop">💻</div>
+        <div class="cta">View Portfolio</div>
+        <div class="domain">joelfredriksson.com</div>
+    </div>
+</body>
+</html>
