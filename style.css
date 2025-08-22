@@ -554,6 +554,14 @@ footer {
     }
 }
 
+/* Contact photo responsive styles */
+@media (max-width: 768px) {
+    .contact-profile-photo {
+        width: 200px;
+        height: 200px;
+    }
+}
+
 @media (max-width: 480px) {
     .hero-content h1 {
         font-size: 2rem;
@@ -572,5 +580,16 @@ footer {
     .services-container,
     .contact-container {
         padding: 0 1rem;
+    }
+    
+    .contact-profile-photo {
+        width: 150px;
+        height: 150px;
+        border: 2px solid #009DE0;
+    }
+    
+    .contact-photo-container {
+        text-align: center;
+        margin-top: 1.5rem;
     }
 }
