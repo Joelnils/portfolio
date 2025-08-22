@@ -35,16 +35,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const navLinks = document.querySelector('.nav-links');
     
-    console.log('Mobile menu elements found:', mobileMenuBtn, navLinks); // Debug log
-    
     if (mobileMenuBtn && navLinks) {
-        mobileMenuBtn.addEventListener('click', function(e) {
+        // Use both click and touchstart for better mobile support
+        const toggleMenu = function(e) {
             e.preventDefault();
             e.stopPropagation();
-            console.log('Menu button clicked'); // Debug log
-            this.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('active');
             navLinks.classList.toggle('active');
-        });
+        };
+        
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        mobileMenuBtn.addEventListener('touchstart', toggleMenu, { passive: false });
         
         // Close mobile menu when clicking on a nav link
         navLinks.querySelectorAll('a').forEach(link => {
