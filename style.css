@@ -178,12 +178,14 @@ nav {
 }
 
 .hero-image {
-    font-size: 8rem;
     opacity: 0.8;
     animation: float 3s ease-in-out infinite;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
 }
 
 .profile-photo {
