@@ -178,30 +178,9 @@ nav {
 }
 
 .hero-image {
+    font-size: 8rem;
     opacity: 0.8;
     animation: float 3s ease-in-out infinite;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 120px;
-    height: 120px;
-    margin: 0 auto;
-}
-
-.profile-photo {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 3px solid #009DE0;
-    box-shadow: 0 5px 20px rgba(0, 157, 224, 0.3);
-    transition: all 0.3s ease;
-}
-
-.profile-photo:hover {
-    transform: scale(1.05);
-    box-shadow: 0 25px 60px rgba(0, 157, 224, 0.5);
-    border-color: #007bb3;
 }
 
 @keyframes float {
