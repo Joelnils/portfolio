@@ -337,7 +337,9 @@ nav {
     border: 1px solid rgba(0, 157, 224, 0.2);
 }
 
-.service-card:nth-child(odd):hover {
+.service-card:nth-child(1):hover,
+.service-card:nth-child(3):hover,
+.service-card:nth-child(5):hover {
     transform: translateY(-8px) rotate(-1deg);
 }
 
