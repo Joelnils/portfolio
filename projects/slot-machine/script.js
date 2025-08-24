@@ -46,6 +46,7 @@ function SlotMachine() {
     
     // Track spinning state per reel
     const [reelSpinning, setReelSpinning] = useState([false, false, false, false, false]);
+    const [reelSlowing, setReelSlowing] = useState([false, false, false, false, false]);
     const [finalResults, setFinalResults] = useState(null);
     
     // Bonus game state
@@ -137,7 +138,7 @@ function SlotMachine() {
         }
         
         return wins;
-    }, []);
+    }, [betAmount]);
     
     // Check individual payline for wins
     const checkPayline = (line, lineId, lineName) => {
@@ -180,7 +181,9 @@ function SlotMachine() {
         if (consecutiveCount >= 3) {
             const baseValue = SYMBOLS[currentSymbol]?.value || 0;
             const multiplier = consecutiveCount === 3 ? 1 : consecutiveCount === 4 ? 2.5 : 5;
-            const payout = Math.round(baseValue * multiplier);
+            // Scale payout with bet amount (bet acts as a multiplier)
+            const betMultiplier = betAmount / BET_AMOUNTS[0]; // Use smallest bet as base (5)
+            const payout = Math.round(baseValue * multiplier * betMultiplier);
             return {
                 isWin: true,
                 symbol: currentSymbol,
@@ -267,9 +270,11 @@ function SlotMachine() {
         
         // Set all reels to spinning state
         setReelSpinning([true, true, true, true, true]);
+        setReelSlowing([false, false, false, false, false]);
         
         // Start spinning with random symbols during animation
         const spinDuration = 1800;
+        let symbolUpdateSpeed = 80; // Start fast
         const symbolUpdateInterval = setInterval(() => {
             setReels(currentReels => 
                 currentReels.map((reel, reelIndex) => 
@@ -278,37 +283,67 @@ function SlotMachine() {
                         : reel // Keep final result if this reel has stopped
                 )
             );
-        }, 80);
+        }, symbolUpdateSpeed);
         
-        // Wait for spin duration
+        // Wait for initial spin duration
         await new Promise(resolve => setTimeout(resolve, spinDuration));
         clearInterval(symbolUpdateInterval);
         
-        // Stop reels one by one with eased timing from left to right
+        // Stop reels one by one with slow-down effect
         for (let reelIndex = 0; reelIndex < 5; reelIndex++) {
-            // Eased timing - starts slow, speeds up in middle, slows down at end
-            const baseDelay = reelIndex * 150;
-            const easedDelay = baseDelay + (Math.sin(reelIndex / 4 * Math.PI) * 100);
+            const baseDelay = reelIndex * 200;
+            const slowDownDelay = 800; // Time to slow down before stopping
             
+            // Start slowing down this reel
             setTimeout(() => {
-                // Stop this specific reel and show its final result
-                setReelSpinning(prev => {
-                    const newSpinning = [...prev];
-                    newSpinning[reelIndex] = false;
-                    return newSpinning;
+                setReelSlowing(prev => {
+                    const newSlowing = [...prev];
+                    newSlowing[reelIndex] = true;
+                    return newSlowing;
                 });
                 
-                // Set the final result for this reel with settling animation
-                setReels(currentReels => {
-                    const newReels = [...currentReels];
-                    newReels[reelIndex] = [...finalReels[reelIndex]];
-                    return newReels;
-                });
+                // Create slower spinning effect
+                let slowSpeed = 120;
+                const slowInterval = setInterval(() => {
+                    setReels(currentReels => {
+                        const newReels = [...currentReels];
+                        if (reelSpinning[reelIndex]) {
+                            newReels[reelIndex] = Array(3).fill().map(() => getRandomSymbol());
+                        }
+                        return newReels;
+                    });
+                    slowSpeed += 20; // Gradually slow down more
+                }, slowSpeed);
                 
-            }, easedDelay);
+                // Finally stop the reel
+                setTimeout(() => {
+                    clearInterval(slowInterval);
+                    
+                    setReelSpinning(prev => {
+                        const newSpinning = [...prev];
+                        newSpinning[reelIndex] = false;
+                        return newSpinning;
+                    });
+                    
+                    setReelSlowing(prev => {
+                        const newSlowing = [...prev];
+                        newSlowing[reelIndex] = false;
+                        return newSlowing;
+                    });
+                    
+                    // Set the final result for this reel
+                    setReels(currentReels => {
+                        const newReels = [...currentReels];
+                        newReels[reelIndex] = [...finalReels[reelIndex]];
+                        return newReels;
+                    });
+                    
+                }, slowDownDelay);
+                
+            }, baseDelay);
         }
         
-        // Process game logic after all reels have stopped (wait for longest eased delay)
+        // Process game logic after all reels have stopped (wait for longest delay + slowdown)
         setTimeout(() => {
             // Handle sticky wilds during bonus
             handleStickyWilds(finalReels);
@@ -364,7 +399,7 @@ function SlotMachine() {
             
             setSpinning(false);
             setFinalResults(null);
-        }, 1600); // Increased wait time for eased animations
+        }, 2400); // Increased wait time for slow-down animations
     };
     
     // Check if position is winning - Updated for new payline system
@@ -487,7 +522,7 @@ function SlotMachine() {
                     {reels.map((reel, reelIndex) => (
                         <div 
                             key={reelIndex} 
-                            className={`reel ${reelSpinning[reelIndex] ? 'spinning' : ''}`}
+                            className={`reel ${reelSpinning[reelIndex] ? 'spinning' : ''} ${reelSlowing[reelIndex] ? 'slowing' : ''}`}
                         >
                             {reel.map((symbol, rowIndex) => (
                                 <div 
@@ -546,22 +581,13 @@ function SlotMachine() {
                     ℹ️ PAYTABLE
                 </button>
                 
-                <div className="credit-buttons">
-                    <button 
-                        className="credit-btn small"
-                        onClick={() => addCredits(500)}
-                        disabled={spinning}
-                    >
-                        +$500
-                    </button>
-                    <button 
-                        className="credit-btn large"
-                        onClick={() => addCredits(1000)}
-                        disabled={spinning}
-                    >
-                        +$1000
-                    </button>
-                </div>
+                <button 
+                    className="credit-btn"
+                    onClick={() => addCredits(1000)}
+                    disabled={spinning}
+                >
+                    +$1000
+                </button>
             </div>
             
             {showPaytable && (
