@@ -531,6 +531,57 @@ body::before {
     box-shadow: 0 8px 20px rgba(78, 205, 196, 0.4);
 }
 
+.credit-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.credit-btn {
+    background: 
+        linear-gradient(45deg, 
+            #4caf50 0%, 
+            #81c784 100%
+        );
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: 'Orbitron', monospace;
+    min-width: 80px;
+}
+
+.credit-btn.large {
+    background: 
+        linear-gradient(45deg, 
+            #ff9800 0%, 
+            #ffb74d 100%
+        );
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+}
+
+.credit-btn:hover:not(:disabled) {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 18px rgba(76, 175, 80, 0.4);
+}
+
+.credit-btn.large:hover:not(:disabled) {
+    box-shadow: 0 6px 18px rgba(255, 152, 0, 0.4);
+}
+
+.credit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
 .message {
     text-align: center;
     padding: 18px;
@@ -921,6 +972,18 @@ body::before {
     .symbol {
         height: 50px;
         font-size: 1.6rem;
+    }
+    
+    .credit-buttons {
+        flex-direction: row;
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    .credit-btn {
+        padding: 10px 16px;
+        font-size: 0.8rem;
+        min-width: 70px;
     }
     
     .paytable-content {

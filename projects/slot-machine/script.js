@@ -219,14 +219,36 @@ function SlotMachine() {
         }
     }, [bonusActive, stickyWilds]);
     
+    // Add credits function
+    const addCredits = (amount) => {
+        setBalance(prev => prev + amount);
+        setMessage(`Added $${amount} to your balance!`);
+    };
+    
+    // Auto-refill when broke
+    const handleBankruptcy = () => {
+        if (balance < Math.min(...BET_AMOUNTS) && !bonusActive) {
+            addCredits(500);
+            setMessage('Bankruptcy protection activated! Added $500 to your balance.');
+        }
+    };
+    
+    // Check for bankruptcy when balance changes
+    useEffect(() => {
+        handleBankruptcy();
+    }, [balance, bonusActive]);
+    
     // Main spin function with enhanced animations
     const spin = async () => {
         if (spinning) return;
         
         // Check if player has enough balance (unless in bonus mode)
         if (!bonusActive && balance < betAmount) {
-            setMessage('Insufficient balance! Reduce bet size or add more coins.');
-            return;
+            handleBankruptcy();
+            if (balance < betAmount) {
+                setMessage('Insufficient balance! Try adding more credits.');
+                return;
+            }
         }
         
         setSpinning(true);
@@ -523,6 +545,23 @@ function SlotMachine() {
                 >
                     ℹ️ PAYTABLE
                 </button>
+                
+                <div className="credit-buttons">
+                    <button 
+                        className="credit-btn small"
+                        onClick={() => addCredits(500)}
+                        disabled={spinning}
+                    >
+                        +$500
+                    </button>
+                    <button 
+                        className="credit-btn large"
+                        onClick={() => addCredits(1000)}
+                        disabled={spinning}
+                    >
+                        +$1000
+                    </button>
+                </div>
             </div>
             
             {showPaytable && (
