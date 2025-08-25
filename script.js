@@ -56,6 +56,9 @@ document.addEventListener('DOMContentLoaded', function() {
             height: 40px;
         `;
         
+        // Add responsive positioning class
+        sunglasses.classList.add('responsive-glasses');
+        
         // Add sunglasses to the hero-image container
         const heroImage = document.querySelector('.hero-image');
         if (heroImage) {

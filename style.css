@@ -692,6 +692,13 @@ footer {
         width: 3px;
         height: 2px;
     }
+    
+    /* Adjust glasses positioning for tablet/mobile */
+    .responsive-glasses {
+        top: 12% !important;
+        left: 50% !important;
+        width: 52px !important;
+    }
 }
 
 @media (max-width: 480px) {
@@ -734,5 +741,12 @@ footer {
     .custom-glasses .bridge {
         width: 2px;
         height: 1px;
+    }
+    
+    /* Adjust glasses positioning for small mobile */
+    .responsive-glasses {
+        top: 11% !important;
+        left: 50% !important;
+        width: 42px !important;
     }
 }
