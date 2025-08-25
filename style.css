@@ -684,8 +684,8 @@ footer {
     
     /* Smaller glasses for tablet/mobile */
     .custom-glasses .lens {
-        width: 22px;
-        height: 22px;
+        width: 20px;
+        height: 20px;
     }
     
     .custom-glasses .bridge {
@@ -734,8 +734,8 @@ footer {
     
     /* Even smaller glasses for small mobile */
     .custom-glasses .lens {
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
     }
     
     .custom-glasses .bridge {
