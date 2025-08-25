@@ -681,6 +681,17 @@ footer {
     .contact-emoji-container {
         font-size: 6rem;
     }
+    
+    /* Smaller glasses for tablet/mobile */
+    .custom-glasses .lens {
+        width: 22px;
+        height: 22px;
+    }
+    
+    .custom-glasses .bridge {
+        width: 3px;
+        height: 2px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -712,5 +723,16 @@ footer {
     .contact-emoji-container {
         font-size: 4rem;
         margin-top: 1.5rem;
+    }
+    
+    /* Even smaller glasses for small mobile */
+    .custom-glasses .lens {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .custom-glasses .bridge {
+        width: 2px;
+        height: 1px;
     }
 }
