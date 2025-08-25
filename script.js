@@ -31,6 +31,62 @@ document.addEventListener('DOMContentLoaded', function() {
     const fadeElements = document.querySelectorAll('.fade-in');
     fadeElements.forEach(el => observer.observe(el));
     
+    // Sunglasses toggle for profile photo
+    const profilePhoto = document.querySelector('.hero-profile-photo');
+    if (profilePhoto) {
+        profilePhoto.style.cursor = 'pointer';
+        
+        // Create custom glasses element
+        const sunglasses = document.createElement('div');
+        sunglasses.className = 'custom-glasses';
+        sunglasses.innerHTML = `
+            <div class="lens left-lens"></div>
+            <div class="bridge"></div>
+            <div class="lens right-lens"></div>
+        `;
+        sunglasses.style.cssText = `
+            position: absolute;
+            top: 13%;
+            left: 49%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 10;
+            display: none !important;
+            width: 65px;
+            height: 40px;
+        `;
+        
+        // Add sunglasses to the hero-image container
+        const heroImage = document.querySelector('.hero-image');
+        if (heroImage) {
+            heroImage.appendChild(sunglasses);
+        }
+        
+        let glassesVisible = false;
+        
+        const photoClick = function() {
+            if (!glassesVisible) {
+                sunglasses.style.setProperty('display', 'flex', 'important');
+                glassesVisible = true;
+            } else {
+                sunglasses.style.setProperty('display', 'none', 'important');
+                glassesVisible = false;
+            }
+        };
+        
+        const toggleGlasses = function() {
+            sunglasses.style.setProperty('display', 'none', 'important');
+            glassesVisible = false;
+        };
+        
+        // Make photo clickable - first click shows, then toggles
+        profilePhoto.addEventListener('click', photoClick);
+        
+        // Make glasses themselves clickable to remove
+        sunglasses.addEventListener('click', toggleGlasses);
+        sunglasses.style.cursor = 'pointer';
+    }
+    
     // Mobile menu setup
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const navLinks = document.querySelector('.nav-links');

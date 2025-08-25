@@ -140,16 +140,17 @@ nav {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
+    gap: 3rem;
     position: relative;
     z-index: 1;
 }
 
 .hero-content h1 {
-    font-size: 3.5rem;
+    font-size: 2.8rem;
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 1.5rem;
@@ -172,6 +173,7 @@ nav {
     display: flex;
     gap: 1rem;
     align-items: center;
+    justify-content: center;
 }
 
 .cta-primary {
@@ -213,9 +215,53 @@ nav {
 }
 
 .hero-image {
-    font-size: 8rem;
-    opacity: 0.8;
-    animation: float 3s ease-in-out infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-profile-photo {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #000;
+    transition: border-color 0.3s ease;
+    position: relative;
+}
+
+.hero-profile-photo:hover {
+    border-color: #009DE0;
+}
+
+
+.hero-image .hero-profile-photo {
+    opacity: 0.9;
+}
+
+/* Custom glasses styles - like eyeglasses emoji */
+.custom-glasses {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.custom-glasses .lens {
+    width: 28px;
+    height: 28px;
+    border: 2px solid #000;
+    border-radius: 50%;
+    background: rgba(135, 206, 235, 0.3);
+    backdrop-filter: blur(1px);
+    box-shadow: inset 0 2px 4px rgba(135, 206, 235, 0.5), 0 0 8px rgba(135, 206, 235, 0.3);
+}
+
+.custom-glasses .bridge {
+    width: 4px;
+    height: 2px;
+    background: #000;
+    border-radius: 1px;
+    margin: 0 1px;
 }
 
 @keyframes float {
@@ -465,16 +511,13 @@ nav {
     justify-content: center;
 }
 
-.contact-photo-container {
+.contact-emoji-container {
     margin-top: 1rem;
+    font-size: 8rem;
+    opacity: 0.8;
+    text-align: center;
+    animation: float 3s ease-in-out infinite;
 }
-
-.contact-profile-photo {
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #009DE0;
     box-shadow: 0 4px 15px rgba(0, 157, 224, 0.2);
 }
 
@@ -560,8 +603,6 @@ footer {
 /* Responsive Design */
 @media (max-width: 768px) {
     .hero-container {
-        grid-template-columns: 1fr;
-        text-align: center;
         gap: 2rem;
     }
     
@@ -630,11 +671,15 @@ footer {
     }
 }
 
-/* Contact photo responsive styles */
+/* Hero photo responsive styles */
 @media (max-width: 768px) {
-    .contact-profile-photo {
+    .hero-profile-photo {
         width: 200px;
         height: 200px;
+    }
+    
+    .contact-emoji-container {
+        font-size: 6rem;
     }
 }
 
@@ -658,14 +703,14 @@ footer {
         padding: 0 1rem;
     }
     
-    .contact-profile-photo {
+    .hero-profile-photo {
         width: 150px;
         height: 150px;
         border: 2px solid #009DE0;
     }
     
-    .contact-photo-container {
-        text-align: center;
+    .contact-emoji-container {
+        font-size: 4rem;
         margin-top: 1.5rem;
     }
 }
