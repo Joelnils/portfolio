@@ -695,7 +695,7 @@ footer {
     
     /* Adjust glasses positioning for tablet/mobile */
     .responsive-glasses {
-        top: 6% !important;
+        top: 7% !important;
         left: 48% !important;
         width: 52px !important;
     }
@@ -745,7 +745,7 @@ footer {
     
     /* Adjust glasses positioning for small mobile */
     .responsive-glasses {
-        top: 5% !important;
+        top: 6% !important;
         left: 48% !important;
         width: 42px !important;
     }
