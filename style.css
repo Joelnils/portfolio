@@ -157,6 +157,11 @@ nav {
     color: #1a202c;
 }
 
+.hero-greeting {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
 .hero-highlight {
     color: #009DE0;
     position: relative;
