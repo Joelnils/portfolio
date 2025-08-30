@@ -26,10 +26,53 @@ const observer = new IntersectionObserver(function(entries) {
     });
 }, observerOptions);
 
+// Google Analytics Event Tracking
+function trackEvent(eventName, category, label = null) {
+    if (typeof gtag !== 'undefined') {
+        gtag('event', eventName, {
+            event_category: category,
+            event_label: label
+        });
+    }
+}
+
 // Observe all fade-in elements and setup mobile menu
 document.addEventListener('DOMContentLoaded', function() {
     const fadeElements = document.querySelectorAll('.fade-in');
     fadeElements.forEach(el => observer.observe(el));
+    
+    // Track project demo clicks
+    document.addEventListener('click', function(e) {
+        const target = e.target.closest('a');
+        if (!target) return;
+        
+        // Track project demos
+        if (target.href.includes('projects/storybook')) {
+            trackEvent('project_demo_click', 'engagement', 'AI Berättargenerator');
+        } else if (target.href.includes('projects/slot-machine')) {
+            trackEvent('project_demo_click', 'engagement', 'React Slotspel');
+        } else if (target.href.includes('projects/gav-calculator')) {
+            trackEvent('project_demo_click', 'engagement', 'GAV-miniräknare');
+        }
+        
+        // Track CV download
+        if (target.href.includes('resume.pdf')) {
+            trackEvent('cv_download', 'engagement', 'Resume PDF');
+        }
+        
+        // Track contact form interaction
+        if (target.href.includes('#contact')) {
+            trackEvent('contact_section_click', 'engagement', 'Contact CTA');
+        }
+    });
+    
+    // Track form submission
+    const contactForm = document.querySelector('form[name="contact"]');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function() {
+            trackEvent('contact_form_submit', 'conversion', 'Contact Form');
+        });
+    }
     
     // Sunglasses toggle for profile photo
     const profilePhoto = document.querySelector('.hero-profile-photo');

@@ -93,6 +93,14 @@ class GAVCalculator {
 
         // Success feedback
         this.showSuccessMessage(`Köp av ${shares} ${stockName} aktier tillagt!`);
+        
+        // Track GAV calculation
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'gav_calculation', {
+                event_category: 'gav_tool_usage',
+                event_label: 'stock_purchase_added'
+            });
+        }
     }
 
     removePurchase(stockName, purchaseId) {
