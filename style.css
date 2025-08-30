@@ -322,8 +322,8 @@ nav {
 
 .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
 }
 
 .project-card {
@@ -333,6 +333,8 @@ nav {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     border: 1px solid #f1f5f9;
+    display: flex;
+    flex-direction: column;
 }
 
 .project-card:hover {
@@ -342,14 +344,17 @@ nav {
 }
 
 .project-image {
-    height: 200px;
+    height: 150px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     position: relative;
     overflow: hidden;
 }
 
 .project-content {
-    padding: 2rem;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .project-title {
@@ -361,14 +366,18 @@ nav {
 
 .project-description {
     color: #4a5568;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     line-height: 1.6;
+    font-size: 0.95rem;
+    height: 3.2em;
+    overflow: hidden;
 }
 
 .project-tech {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    margin-bottom: 0.75rem;
 }
 
 .tech-tag {
@@ -387,6 +396,28 @@ nav {
     color: #009DE0;
     border: 1px solid rgba(0, 157, 224, 0.2);
     transform: translateY(-2px);
+}
+
+.project-cta {
+    margin-top: auto;
+}
+
+.btn-project {
+    background: #009DE0;
+    color: white;
+    padding: 0.75rem 1.25rem;
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.btn-project:hover {
+    background: #007bb3;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 157, 224, 0.3);
 }
 
 /* Services Section */
