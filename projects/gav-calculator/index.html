@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAV Kalkylator - Genomsnittligt Anskaffningsvärde</title>
+    <meta name="description" content="Gratis GAV kalkylator för svenska aktier. Beräkna Genomsnittligt Anskaffningsvärde inklusive courtage. Perfekt för snittning och portföljspårning. Avanza-inspirerad design.">
+    <meta name="keywords" content="GAV kalkylator, genomsnittligt anskaffningsvärde, aktier, courtage, snittning, portfölj, svenska aktier, avanza, börsen, investeringar">
+    <link rel="canonical" href="https://joelfredriksson.com/projects/gav-calculator/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://joelfredriksson.com/projects/gav-calculator/">
+    <meta property="og:title" content="GAV Kalkylator - Beräkna Genomsnittligt Anskaffningsvärde för Aktier">
+    <meta property="og:description" content="Gratis verktyg för att beräkna GAV inklusive courtage. Avanza-inspirerad design för svenska investerare. Spåra din portfölj och beräkna snittning enkelt.">
+    <meta property="og:image" content="https://joelfredriksson.com/og-image.svg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://joelfredriksson.com/projects/gav-calculator/">
+    <meta property="twitter:title" content="GAV Kalkylator - Svenska Aktier">
+    <meta property="twitter:description" content="Gratis GAV kalkylator med courtage-stöd. Avanza-inspirerad design för portföljspårning.">
+    <meta property="twitter:image" content="https://joelfredriksson.com/og-image.svg">
+    
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "GAV Kalkylator",
+        "description": "Gratis kalkylator för att beräkna Genomsnittligt Anskaffningsvärde (GAV) för svenska aktier inklusive courtage.",
+        "url": "https://joelfredriksson.com/projects/gav-calculator/",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "SEK"
+        },
+        "creator": {
+            "@type": "Person",
+            "name": "Joel Fredriksson",
+            "jobTitle": "JavaScript Developer",
+            "url": "https://joelfredriksson.com/"
+        },
+        "featureList": [
+            "Beräkna GAV (Genomsnittligt Anskaffningsvärde)",
+            "Inkludera courtage i beräkningar",
+            "Spåra flera aktieinnehav",
+            "Köphistorik per aktie",
+            "Portföljöversikt",
+            "LocalStorage för datapersistens",
+            "Avanza-inspirerad design"
+        ],
+        "keywords": "GAV, genomsnittligt anskaffningsvärde, aktier, courtage, snittning, portfölj, svenska aktier, kalkylator",
+        "inLanguage": "sv-SE",
+        "isAccessibleForFree": true,
+        "audience": {
+            "@type": "Audience",
+            "audienceType": "Swedish investors",
+            "geographicArea": {
+                "@type": "Country",
+                "name": "Sweden"
+            }
+        },
+        "about": [
+            {
+                "@type": "Thing",
+                "name": "GAV (Genomsnittligt Anskaffningsvärde)",
+                "description": "Genomsnittligt pris betalt för aktier i ett bolag"
+            },
+            {
+                "@type": "Thing", 
+                "name": "Courtage",
+                "description": "Avgift till mäklare för aktietransaktioner"
+            },
+            {
+                "@type": "Thing",
+                "name": "Aktieportfölj",
+                "description": "Samling av aktieinnehav"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">GAV Kalkylator</h1>
+                <p class="subtitle">Beräkna ditt Genomsnittliga Anskaffningsvärde</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Portfolio Overview -->
+            <section class="portfolio-overview">
+                <div class="overview-card">
+                    <h2>Min Portfölj</h2>
+                    <div class="overview-stats">
+                        <div class="stat">
+                            <span class="stat-label">Totalt investerat</span>
+                            <span class="stat-value" id="totalInvested">0 kr</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Totala aktier</span>
+                            <span class="stat-value" id="totalShares">0 st</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Genomsnittligt GAV</span>
+                            <span class="stat-value highlight" id="averageGAV">0 kr</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Add New Stock -->
+            <section class="add-stock-section">
+                <div class="form-card">
+                    <h3>Lägg till aktieköp</h3>
+                    <form id="stockForm" class="stock-form">
+                        <div class="form-group">
+                            <label for="stockName">Aktie</label>
+                            <input type="text" id="stockName" placeholder="T.ex. Volvo B, Ericsson B" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="shares">Antal aktier</label>
+                                <input type="number" id="shares" min="1" step="1" placeholder="100" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Pris per aktie (kr)</label>
+                                <input type="number" id="price" min="0" step="0.01" placeholder="125.50" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="courtage">Courtage (kr)</label>
+                            <input type="number" id="courtage" min="0" step="0.01" placeholder="9.00" value="0">
+                            <small class="form-help">Avgift till mäklare för transaktionen</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="date">Datum</label>
+                            <input type="date" id="date" required>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary">Lägg till köp</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Holdings List -->
+            <section class="holdings-section">
+                <div class="holdings-card">
+                    <h3>Mina innehav</h3>
+                    <div id="holdingsList" class="holdings-list">
+                        <div class="empty-state">
+                            <p>Inga aktieköp tillagda ännu.</p>
+                            <p class="empty-subtitle">Lägg till ditt första köp för att börja beräkna GAV.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Info Modal -->
+        <div id="infoModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>Vad är GAV?</h3>
+                <p><strong>Genomsnittligt Anskaffningsvärde (GAV)</strong> är det genomsnittliga pris du betalat för dina aktier i ett bolag, inklusive courtage.</p>
+                <h4>Beräkning:</h4>
+                <p>GAV = (Total kostnad + Totalt courtage) ÷ Totalt antal aktier</p>
+                <h4>Exempel:</h4>
+                <ul>
+                    <li>Köp 1: 100 aktier à 10 kr + 9 kr courtage = 1009 kr</li>
+                    <li>Köp 2: 50 aktier à 5 kr + 9 kr courtage = 259 kr</li>
+                    <li>Totalt: 1268 kr ÷ 150 aktier = 8,45 kr per aktie</li>
+                </ul>
+                <h4>Vad är Courtage?</h4>
+                <p><strong>Courtage</strong> är avgiften du betalar till mäklare för att genomföra köp eller försäljning av aktier. Avgiften varierar mellan mäklare och påverkar ditt GAV.</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>GAV Kalkylator - Ett verktyg för att följa dina investeringar</p>
+            <button id="infoBtn" class="info-btn">Vad är GAV?</button>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
