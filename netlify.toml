@@ -2,8 +2,8 @@
   # Directory to build from
   publish = "."
   
-  # Build command to handle React app in matladereknaren subfolder
-  command = "cd projects/matladereknaren && npm ci && npm run build"
+  # Build command to handle React app in matladereknaren subfolder  
+  command = "cd projects/matladereknaren && npm ci && npm run build && cp -r dist/* ../matladereknaren/"
 
 [build.environment]
   # Node version for build (Vite requires 20.19+ or 22.12+)
