@@ -53,6 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
             trackEvent('project_demo_click', 'engagement', 'React Slotspel');
         } else if (target.href.includes('projects/gav-calculator')) {
             trackEvent('project_demo_click', 'engagement', 'GAV-miniräknare');
+        } else if (target.href.includes('projects/matladereknaren')) {
+            trackEvent('project_demo_click', 'engagement', 'Matlåderäknaren');
         }
         
         // Track CV download
