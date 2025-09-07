@@ -2,7 +2,7 @@ function MealSettings({ mealCount, onMealCountChange }) {
   return (
     <div className="card">
       <label className="block text-lg font-semibold text-gray-800 mb-4">
-        📊 Dela upp maten på hur många portioner?
+        📊 Hur många portioner ska maten räcka till?
       </label>
       
       {/* Simple input with clear label */}
