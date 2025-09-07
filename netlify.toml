@@ -2,14 +2,19 @@
   # Directory to build from
   publish = "."
   
-  # Build command (not needed for static HTML site)
-  command = ""
+  # Build command to handle React app in matladereknaren subfolder
+  command = "cd projects/matladereknaren && npm ci && npm run build && rm -rf *.html *.js *.css assets 2>/dev/null || true && cp -r dist/* . && cd ../.."
 
 [build.environment]
-  # Node version for build (if needed in future)
-  NODE_VERSION = "18"
+  # Node version for build (Vite requires 20.19+ or 22.12+)
+  NODE_VERSION = "20"
 
 # Redirect rules for single page application behavior
+[[redirects]]
+  from = "/projects/matladereknaren/*"
+  to = "/projects/matladereknaren/index.html"
+  status = 200
+
 [[redirects]]
   from = "/projects/*"
   to = "/projects/:splat"
