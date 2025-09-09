@@ -1,7 +1,25 @@
 function IngredientItem({ ingredient, nutrition, onRemove, onUpdate }) {
   const handleQuantityChange = (e) => {
-    const newQuantity = parseFloat(e.target.value) || 0
-    onUpdate(ingredient.id, { quantity: newQuantity })
+    const value = e.target.value
+    // Allow empty field during editing
+    if (value === '') {
+      onUpdate(ingredient.id, { quantity: '' })
+      return
+    }
+    // Parse to number but allow string during editing
+    const newQuantity = parseFloat(value)
+    if (!isNaN(newQuantity)) {
+      onUpdate(ingredient.id, { quantity: value })
+    }
+  }
+  
+  const handleQuantityBlur = (e) => {
+    const value = e.target.value
+    const numValue = parseFloat(value)
+    // Ensure valid number on blur
+    if (value === '' || isNaN(numValue) || numValue < 0) {
+      onUpdate(ingredient.id, { quantity: 0 })
+    }
   }
   
   const handleUnitChange = (e) => {
@@ -9,8 +27,26 @@ function IngredientItem({ ingredient, nutrition, onRemove, onUpdate }) {
   }
   
   const handlePriceChange = (e) => {
-    const newPrice = parseFloat(e.target.value) || 0
-    onUpdate(ingredient.id, { price: newPrice })
+    const value = e.target.value
+    // Allow empty field during editing
+    if (value === '') {
+      onUpdate(ingredient.id, { price: '' })
+      return
+    }
+    // Parse to number but allow string during editing
+    const newPrice = parseFloat(value)
+    if (!isNaN(newPrice)) {
+      onUpdate(ingredient.id, { price: value })
+    }
+  }
+  
+  const handlePriceBlur = (e) => {
+    const value = e.target.value
+    const numValue = parseFloat(value)
+    // Ensure valid number on blur
+    if (value === '' || isNaN(numValue) || numValue < 0) {
+      onUpdate(ingredient.id, { price: 0 })
+    }
   }
   
   return (
@@ -36,11 +72,19 @@ function IngredientItem({ ingredient, nutrition, onRemove, onUpdate }) {
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Mängd</label>
           <input
-            type="number"
-            step="0.1"
-            min="0"
+            type="text"
+            inputMode="decimal"
+            pattern="[0-9]*\.?[0-9]*"
             value={ingredient.quantity}
             onChange={handleQuantityChange}
+            onBlur={handleQuantityBlur}
+            onKeyDown={(e) => {
+              // Handle backspace/delete when field contains only '0'
+              if ((e.key === 'Backspace' || e.key === 'Delete') && e.target.value === '0') {
+                e.preventDefault();
+                onUpdate(ingredient.id, { quantity: '' });
+              }
+            }}
             className="input-field"
             placeholder="1"
           />
@@ -69,11 +113,19 @@ function IngredientItem({ ingredient, nutrition, onRemove, onUpdate }) {
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">Pris (kr)</label>
           <input
-            type="number"
-            step="0.01"
-            min="0"
+            type="text"
+            inputMode="decimal"
+            pattern="[0-9]*\.?[0-9]*"
             value={ingredient.price || ''}
             onChange={handlePriceChange}
+            onBlur={handlePriceBlur}
+            onKeyDown={(e) => {
+              // Handle backspace/delete when field contains only '0'
+              if ((e.key === 'Backspace' || e.key === 'Delete') && e.target.value === '0') {
+                e.preventDefault();
+                onUpdate(ingredient.id, { price: '' });
+              }
+            }}
             className="input-field"
             placeholder="0.00"
           />
