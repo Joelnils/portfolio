@@ -14,13 +14,14 @@ function MealSettings({ mealCount, onMealCountChange }) {
           value={mealCount}
           onChange={(e) => {
             const value = e.target.value;
-            // Allow empty field or any numeric input temporarily
+            // Allow empty field
             if (value === '') {
-              onMealCountChange(''); // Allow empty state
+              onMealCountChange('');
               return;
             }
+            // Allow any valid numeric input temporarily (including 0)
             const numValue = parseInt(value);
-            if (!isNaN(numValue) && numValue >= 1 && numValue <= 30) {
+            if (!isNaN(numValue)) {
               onMealCountChange(numValue);
             }
           }}
