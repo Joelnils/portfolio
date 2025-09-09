@@ -8,9 +8,9 @@ function MealSettings({ mealCount, onMealCountChange }) {
       {/* Simple input with clear label */}
       <div className="flex items-center justify-center gap-4 mb-6">
         <input
-          type="number"
-          min="1"
-          max="30"
+          type="text"
+          inputMode="numeric"
+          pattern="[0-9]*"
           value={mealCount}
           onChange={(e) => {
             const value = e.target.value;
@@ -19,9 +19,10 @@ function MealSettings({ mealCount, onMealCountChange }) {
               onMealCountChange('');
               return;
             }
-            // Pass the string value directly to allow proper editing
-            // This allows users to type and delete freely
-            onMealCountChange(value);
+            // Only allow numeric characters
+            if (/^\d+$/.test(value)) {
+              onMealCountChange(value);
+            }
           }}
           onBlur={(e) => {
             // Ensure we have a valid value when user leaves the field
