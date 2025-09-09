@@ -12,7 +12,23 @@ function MealSettings({ mealCount, onMealCountChange }) {
           min="1"
           max="30"
           value={mealCount}
-          onChange={(e) => onMealCountChange(parseInt(e.target.value) || 1)}
+          onChange={(e) => {
+            const value = e.target.value;
+            if (value === '' || value === '0') {
+              return; // Allow empty field temporarily
+            }
+            const numValue = parseInt(value);
+            if (numValue >= 1 && numValue <= 30) {
+              onMealCountChange(numValue);
+            }
+          }}
+          onBlur={(e) => {
+            // Ensure we have a valid value when user leaves the field
+            const value = parseInt(e.target.value);
+            if (!value || value < 1) {
+              onMealCountChange(1);
+            }
+          }}
           className="input-field max-w-24 text-center text-2xl font-bold"
         />
         <span className="text-lg text-gray-600">portioner</span>
