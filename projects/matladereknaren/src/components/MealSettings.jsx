@@ -14,16 +14,14 @@ function MealSettings({ mealCount, onMealCountChange }) {
           value={mealCount}
           onChange={(e) => {
             const value = e.target.value;
-            // Allow empty field
+            // Allow empty field during editing
             if (value === '') {
               onMealCountChange('');
               return;
             }
-            // Allow any valid numeric input temporarily (including 0)
-            const numValue = parseInt(value);
-            if (!isNaN(numValue)) {
-              onMealCountChange(numValue);
-            }
+            // Pass the string value directly to allow proper editing
+            // This allows users to type and delete freely
+            onMealCountChange(value);
           }}
           onBlur={(e) => {
             // Ensure we have a valid value when user leaves the field
