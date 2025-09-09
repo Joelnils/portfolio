@@ -37,7 +37,7 @@ function MealSettings({ mealCount, onMealCountChange }) {
       </div>
       
       <p className="text-center text-sm text-gray-600 mb-6">
-        Alla näringsvärden och priser delas på {mealCount} portioner
+        Alla näringsvärden och priser delas på {typeof mealCount === 'string' ? (parseInt(mealCount) || 1) : mealCount} portioner
       </p>
       
       {/* Quick preset buttons */}

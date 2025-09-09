@@ -11,6 +11,9 @@ function App() {
   const [ingredients, setIngredients] = useState([])
   const [nutritionData, setNutritionData] = useState({})
   const [mealCount, setMealCount] = useState(7)
+  
+  // Helper to get numeric mealCount for calculations
+  const numericMealCount = typeof mealCount === 'string' ? (parseInt(mealCount) || 1) : mealCount
   const [loading, setLoading] = useState(false)
 
   // Add ingredient
@@ -156,7 +159,7 @@ function App() {
             <NutritionSummary 
               totals={totals}
               totalPrice={totalPrice}
-              mealCount={mealCount}
+              mealCount={numericMealCount}
             />
           </section>
         )}
