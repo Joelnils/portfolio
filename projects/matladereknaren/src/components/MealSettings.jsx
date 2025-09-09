@@ -19,9 +19,16 @@ function MealSettings({ mealCount, onMealCountChange }) {
               onMealCountChange('');
               return;
             }
-            // Only allow numeric characters
+            // Only allow numeric characters (but allow single digits including 0)
             if (/^\d+$/.test(value)) {
               onMealCountChange(value);
+            }
+          }}
+          onKeyDown={(e) => {
+            // Handle backspace/delete when field contains only '0'
+            if ((e.key === 'Backspace' || e.key === 'Delete') && e.target.value === '0') {
+              e.preventDefault();
+              onMealCountChange('');
             }
           }}
           onBlur={(e) => {
