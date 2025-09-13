@@ -122,8 +122,8 @@ function App() {
       />
       
       <main className="max-w-6xl mx-auto px-4 py-8">
-        {/* Sticky Ingredient Input */}
-        <div className="sticky top-20 z-30 bg-white/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200 p-6 mb-8">
+        {/* Ingredient Input */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
           <div className="flex items-center gap-3 mb-4">
             <span className="text-2xl">🛒</span>
             <h2 className="text-xl font-semibold text-gray-900">Lägg till ingredienser</h2>
