@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (target.href.includes('projects/gav-calculator')) {
             trackEvent('project_demo_click', 'engagement', 'GAV-miniräknare');
         } else if (target.href.includes('projects/matladereknaren')) {
-            trackEvent('project_demo_click', 'engagement', 'Matlåderäknaren');
+            trackEvent('project_demo_click', 'engagement', 'Matplan');
         }
         
         // Track CV download
