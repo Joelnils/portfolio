@@ -1,4 +1,4 @@
-function IngredientItem({ ingredient, nutrition, onRemove, onUpdate }) {
+function IngredientItem({ ingredient, nutrition, onRemove, onUpdate, compact = false }) {
   const handleQuantityChange = (e) => {
     const value = e.target.value
     // Allow empty field during editing
@@ -49,6 +49,49 @@ function IngredientItem({ ingredient, nutrition, onRemove, onUpdate }) {
     }
   }
   
+  if (compact) {
+    return (
+      <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-all duration-200">
+        <div className="flex items-center gap-4">
+          {/* Name and basic info */}
+          <div className="flex-1 min-w-0">
+            <h4 className="font-medium text-gray-900 truncate">{ingredient.name}</h4>
+            <div className="text-sm text-gray-500">
+              {ingredient.quantity} {ingredient.unit} • {ingredient.price || 0} kr
+            </div>
+          </div>
+          
+          {/* Nutrition summary */}
+          {nutrition && (
+            <div className="hidden sm:flex items-center gap-3 text-sm">
+              <span className="text-gray-600">{nutrition.kcal} kcal</span>
+              <span className="text-blue-600">{nutrition.protein}g protein</span>
+            </div>
+          )}
+          
+          {/* Status indicator */}
+          <div className="flex items-center gap-2">
+            {nutrition ? (
+              <div className="w-2 h-2 bg-green-500 rounded-full" title="Näringsdata tillgänglig" />
+            ) : (
+              <div className="w-2 h-2 bg-yellow-500 rounded-full" title="Ingen näringsdata" />
+            )}
+            
+            <button
+              onClick={() => onRemove(ingredient.id)}
+              className="text-gray-400 hover:text-red-500 p-1 rounded transition-colors"
+              title="Ta bort ingrediens"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="card hover:shadow-lg transition-all duration-300">
       {/* Header */}

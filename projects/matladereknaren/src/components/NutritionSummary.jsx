@@ -1,3 +1,20 @@
+function NutritionBar({ label, value, color, percentage = 0 }) {
+  return (
+    <div>
+      <div className="flex justify-between items-center mb-1">
+        <span className="text-sm font-medium text-gray-700">{label}</span>
+        <span className="text-sm font-semibold text-gray-900">{value}g</span>
+      </div>
+      <div className="w-full bg-gray-200 rounded-full h-2">
+        <div 
+          className={`h-2 rounded-full transition-all duration-500 ${color}`}
+          style={{ width: `${Math.min(percentage, 100)}%` }}
+        />
+      </div>
+    </div>
+  )
+}
+
 function SummaryCard({ title, icon, nutrition, price, mealCount, isTotal = false }) {
   const displayNutrition = isTotal ? nutrition : {
     kcal: Math.round(nutrition.kcal / mealCount),
@@ -8,38 +25,85 @@ function SummaryCard({ title, icon, nutrition, price, mealCount, isTotal = false
   
   const displayPrice = isTotal ? price : Math.round((price / mealCount) * 100) / 100
   
+  // Calculate percentages for visual bars (based on rough daily values)
+  const dailyValues = {
+    protein: 50, // 50g daily protein goal
+    carbs: 300,  // 300g daily carbs goal  
+    fat: 70      // 70g daily fat goal
+  }
+  
+  const percentages = isTotal ? {
+    protein: 0, carbs: 0, fat: 0  // No bars for total
+  } : {
+    protein: (displayNutrition.protein / dailyValues.protein) * 100,
+    carbs: (displayNutrition.carbs / dailyValues.carbs) * 100,
+    fat: (displayNutrition.fat / dailyValues.fat) * 100
+  }
+  
   return (
-    <div className="bg-gradient-to-br from-gray-800 to-gray-900 text-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-      <div className="flex items-center gap-3 mb-6">
-        <span className="text-2xl">{icon}</span>
-        <h3 className="text-sm font-medium uppercase tracking-wider text-gray-300">
-          {title}
-        </h3>
+    <div className="card border-2 hover:border-green-200 hover:shadow-lg transition-all duration-300 group">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-green-50 rounded-lg group-hover:bg-green-100 transition-colors">
+            <span className="text-xl">{icon}</span>
+          </div>
+          <h3 className="font-semibold text-gray-900">
+            {title}
+          </h3>
+        </div>
+        {!isTotal && (
+          <div className="text-xs font-medium text-green-600 bg-green-50 px-2 py-1 rounded-full">
+            per portion
+          </div>
+        )}
       </div>
       
-      <div className="mb-6">
-        <div className="text-3xl font-light mb-2">
-          {displayNutrition.kcal} <span className="text-lg text-gray-400">kcal</span>
+      {/* Main metrics */}
+      <div className="flex items-baseline justify-between mb-6">
+        <div>
+          <div className="text-3xl font-bold text-gray-900 mb-1">
+            {displayNutrition.kcal}
+            <span className="text-lg font-normal text-gray-500 ml-1">kcal</span>
+          </div>
+          <div className="text-lg font-semibold text-green-600">
+            {displayPrice} kr
+          </div>
         </div>
-        <div className="text-xl font-medium text-green-400">
-          {displayPrice} kr
+        
+        {/* Quick nutrition overview */}
+        <div className="text-right">
+          <div className="text-sm text-gray-600 space-y-1">
+            <div>{displayNutrition.protein}g protein</div>
+            <div>{displayNutrition.carbs}g kolhydrater</div>
+            <div>{displayNutrition.fat}g fett</div>
+          </div>
         </div>
       </div>
       
-      <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-700">
-        <div>
-          <div className="text-lg font-semibold">{displayNutrition.protein}g</div>
-          <div className="text-xs text-gray-400 uppercase tracking-wide">Protein</div>
+      {/* Nutrition bars (only for per-portion) */}
+      {!isTotal && (
+        <div className="space-y-3 pt-4 border-t border-gray-100">
+          <NutritionBar 
+            label="Protein" 
+            value={displayNutrition.protein} 
+            color="bg-blue-500" 
+            percentage={percentages.protein}
+          />
+          <NutritionBar 
+            label="Kolhydrater" 
+            value={displayNutrition.carbs} 
+            color="bg-orange-500" 
+            percentage={percentages.carbs}
+          />
+          <NutritionBar 
+            label="Fett" 
+            value={displayNutrition.fat} 
+            color="bg-purple-500" 
+            percentage={percentages.fat}
+          />
         </div>
-        <div>
-          <div className="text-lg font-semibold">{displayNutrition.carbs}g</div>
-          <div className="text-xs text-gray-400 uppercase tracking-wide">Kolhydr.</div>
-        </div>
-        <div>
-          <div className="text-lg font-semibold">{displayNutrition.fat}g</div>
-          <div className="text-xs text-gray-400 uppercase tracking-wide">Fett</div>
-        </div>
-      </div>
+      )}
     </div>
   )
 }
