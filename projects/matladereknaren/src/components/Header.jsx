@@ -10,16 +10,16 @@ function Header() {
             
             {/* Main heading */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight">
-              <span className="block">Matlåde</span>
+              <span className="block">Mat</span>
               <span className="block bg-gradient-to-r from-green-200 to-emerald-200 bg-clip-text text-transparent">
-                räknaren
+                plan
               </span>
             </h1>
             
             {/* Subtitle */}
             <p className="max-w-3xl mx-auto text-lg sm:text-xl text-green-100 leading-relaxed mb-10">
-              Lägg till hela din inköpslista och räkna ut exakt hur många kalorier, protein, 
-              kolhydrater och fett du får i dig under veckan – och se hur många matlådor det blir.
+              Lägg till din inköpslista för veckan, räkna ut hur mycket kalorier, protein, 
+              kolhydrater och fett du får i dig, och se hur många matlådor det blir!
             </p>
             
             {/* Features */}
