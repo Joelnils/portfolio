@@ -6,9 +6,11 @@ import MealSettings from './components/MealSettings'
 import NutritionSummary from './components/NutritionSummary'
 import LiveSummaryBar from './components/LiveSummaryBar'
 import BackLink from './components/BackLink'
+import InspirationPage from './components/InspirationPage'
 import { parseIngredient, lookupNutrition, calculateNutrition } from './utils/nutrition'
 
 function App() {
+  const [currentPage, setCurrentPage] = useState('calculator')
   const [ingredients, setIngredients] = useState([])
   const [nutritionData, setNutritionData] = useState({})
   const [mealCount, setMealCount] = useState(7)
@@ -100,6 +102,41 @@ function App() {
 
   const totalPrice = ingredients.reduce((acc, ing) => acc + (ing.price || 0), 0)
 
+  // Import meal plan function
+  const importMealPlan = useCallback(async (mealPlan) => {
+    // Clear existing ingredients
+    setIngredients([])
+    setNutritionData({})
+
+    // Add all ingredients from meal plan
+    for (const ingredient of mealPlan.ingredients) {
+      const newIngredient = {
+        ...ingredient,
+        id: Date.now() + Math.random(), // Ensure unique IDs
+        price: 0
+      }
+
+      setIngredients(prev => [...prev, newIngredient])
+
+      // Fetch nutrition data
+      try {
+        const nutritionResponse = await lookupNutrition(ingredient.name)
+        if (nutritionResponse.success) {
+          const calculatedNutrition = calculateNutrition(newIngredient, nutritionResponse.data)
+          setNutritionData(prev => ({
+            ...prev,
+            [newIngredient.id]: calculatedNutrition
+          }))
+        }
+      } catch (error) {
+        console.error('Failed to fetch nutrition data:', error)
+      }
+    }
+
+    // Switch to calculator view
+    setCurrentPage('calculator')
+  }, [])
+
   // Track analytics
   useEffect(() => {
     if (typeof window.gtag !== 'undefined') {
@@ -110,24 +147,62 @@ function App() {
     }
   }, [])
 
+  // Show inspiration page
+  if (currentPage === 'inspiration') {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <BackLink />
+        <InspirationPage
+          onImportMealPlan={importMealPlan}
+          onBackToCalculator={() => setCurrentPage('calculator')}
+        />
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <BackLink />
       <Header />
-      <LiveSummaryBar 
+      <LiveSummaryBar
         totals={totals}
         totalPrice={totalPrice}
         ingredientCount={ingredients.length}
         mealCount={numericMealCount}
       />
-      
+
       <main className="max-w-6xl mx-auto px-4 py-8">
         {/* Ingredient Input */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-2xl">🛒</span>
-            <h2 className="text-xl font-semibold text-gray-900">Lägg till ingredienser</h2>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">🛒</span>
+              <h2 className="text-xl font-semibold text-gray-900">Lägg till ingredienser</h2>
+            </div>
+            <button
+              onClick={() => setCurrentPage('inspiration')}
+              className="px-4 py-2 text-green-600 hover:text-green-700 hover:bg-green-50 rounded-lg transition-colors text-sm font-medium flex items-center gap-2"
+            >
+              <span className="text-lg">💡</span>
+              Inspiration
+            </button>
           </div>
+
+          {/* Quick-start prompt for new users */}
+          {ingredients.length === 0 && (
+            <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+              <p className="text-green-800 text-sm mb-2">
+                <strong>Ny här?</strong> Börja enkelt med våra färdiga veckomenyer!
+              </p>
+              <button
+                onClick={() => setCurrentPage('inspiration')}
+                className="text-green-700 hover:text-green-800 text-sm font-medium underline"
+              >
+                Se färdiga exempel →
+              </button>
+            </div>
+          )}
+
           <IngredientInput onAdd={addIngredient} loading={loading} />
         </div>
 
