@@ -205,52 +205,70 @@ function App() {
       />
 
       <main className="max-w-6xl mx-auto px-4 py-8">
-        {/* Settings for empty state - Show first */}
-        {ingredients.length === 0 && (
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center flex items-center justify-center gap-2">
-              <span className="text-xl">📊</span>
-              Portionsinställningar
-            </h3>
-            <div className="max-w-md mx-auto">
+        {/* Combined Settings and Input for empty state */}
+        {ingredients.length === 0 ? (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            {/* Settings Panel */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center flex items-center justify-center gap-2">
+                <span className="text-xl">📊</span>
+                Portionsinställningar
+              </h3>
               <MealSettings mealCount={mealCount} onMealCountChange={setMealCount} />
             </div>
-          </div>
-        )}
 
-        {/* Ingredient Input */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <span className="text-2xl">🛒</span>
-              <h2 className="text-xl font-semibold text-gray-900">Lägg till ingredienser</h2>
+            {/* Ingredient Input Panel */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">🛒</span>
+                  <h2 className="text-xl font-semibold text-gray-900">Lägg till ingredienser</h2>
+                </div>
+                <a
+                  href="inspiration/"
+                  className="px-4 py-2 text-green-600 hover:text-green-700 hover:bg-green-50 rounded-lg transition-colors text-sm font-medium flex items-center gap-2"
+                >
+                  <span className="text-lg">💡</span>
+                  Inspiration
+                </a>
+              </div>
+
+              {/* Quick-start prompt for new users */}
+              <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                <p className="text-green-800 text-sm mb-2">
+                  <strong>Ny här?</strong> Börja enkelt med våra färdiga veckomenyer!
+                </p>
+                <a
+                  href="inspiration/"
+                  className="text-green-700 hover:text-green-800 text-sm font-medium underline"
+                >
+                  Se färdiga exempel →
+                </a>
+              </div>
+
+              <IngredientInput onAdd={addIngredient} loading={loading} />
             </div>
-            <a
-              href="inspiration/"
-              className="px-4 py-2 text-green-600 hover:text-green-700 hover:bg-green-50 rounded-lg transition-colors text-sm font-medium flex items-center gap-2"
-            >
-              <span className="text-lg">💡</span>
-              Inspiration
-            </a>
           </div>
-
-          {/* Quick-start prompt for new users */}
-          {ingredients.length === 0 && (
-            <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
-              <p className="text-green-800 text-sm mb-2">
-                <strong>Ny här?</strong> Börja enkelt med våra färdiga veckomenyer!
-              </p>
+        ) : (
+          /* Ingredient Input when we have ingredients */
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl">🛒</span>
+                <h2 className="text-xl font-semibold text-gray-900">Lägg till ingredienser</h2>
+              </div>
               <a
                 href="inspiration/"
-                className="text-green-700 hover:text-green-800 text-sm font-medium underline"
+                className="px-4 py-2 text-green-600 hover:text-green-700 hover:bg-green-50 rounded-lg transition-colors text-sm font-medium flex items-center gap-2"
               >
-                Se färdiga exempel →
+                <span className="text-lg">💡</span>
+                Inspiration
               </a>
             </div>
-          )}
 
-          <IngredientInput onAdd={addIngredient} loading={loading} />
-        </div>
+            <IngredientInput onAdd={addIngredient} loading={loading} />
+          </div>
+        )}
 
         {/* Main Content Grid */}
         <div className="space-y-8">
