@@ -440,6 +440,7 @@ function generateCategoryPage(category) {
       .card-action {
         padding-top: 1rem;
         border-top: 1px solid #f3f4f6;
+        text-align: center;
       }
       .import-button {
         display: block;
