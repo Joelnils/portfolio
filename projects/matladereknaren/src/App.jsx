@@ -207,7 +207,7 @@ function App() {
       <main className="max-w-6xl mx-auto px-4 py-8">
         {/* Combined Settings and Input for empty state */}
         {ingredients.length === 0 ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 mt-8">
             {/* Settings Panel */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center flex items-center justify-center gap-2">
