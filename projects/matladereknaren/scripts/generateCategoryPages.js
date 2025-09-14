@@ -490,8 +490,8 @@ function generateCategoryPage(category) {
 
       <div class="content">
         <p style="color: #6b7280; text-align: center;">
-          <strong>Så fungerar det:</strong> Öppna kalkylatorn ovan och klicka på "💡 Inspiration" för att importera något av dessa recept direkt.
-          Alla ingredienser läggs automatiskt till och näringsvärden beräknas åt dig!
+          <strong>Så fungerar det:</strong> Klicka på "🍱 Använd i kalkylatorn" på något av recepten ovan så öppnas kalkylatorn med alla ingredienser automatiskt tillagda.
+          Näringsvärden och kostnader beräknas direkt åt dig!
         </p>
       </div>
     </div>
