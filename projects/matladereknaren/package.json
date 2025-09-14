@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/generateCategoryPages.js",
+    "build:app": "vite build",
+    "build:pages": "node scripts/generateCategoryPages.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },

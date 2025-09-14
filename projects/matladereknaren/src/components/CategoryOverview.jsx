@@ -75,9 +75,9 @@ function CategoryCard({ category, recipeCount, onSelect }) {
   }
 
   return (
-    <div
-      className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer group"
-      onClick={onSelect}
+    <a
+      href={`inspiration/${category.slug}/`}
+      className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer group block"
     >
       {/* Header gradient */}
       <div className={`h-24 bg-gradient-to-r ${getCategoryColor(category.id)} flex items-center justify-center`}>
@@ -106,7 +106,7 @@ function CategoryCard({ category, recipeCount, onSelect }) {
           </svg>
         </div>
       </div>
-    </div>
+    </a>
   )
 }
 
