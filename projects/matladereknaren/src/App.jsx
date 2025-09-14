@@ -205,6 +205,19 @@ function App() {
       />
 
       <main className="max-w-6xl mx-auto px-4 py-8">
+        {/* Settings for empty state - Show first */}
+        {ingredients.length === 0 && (
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center flex items-center justify-center gap-2">
+              <span className="text-xl">📊</span>
+              Portionsinställningar
+            </h3>
+            <div className="max-w-md mx-auto">
+              <MealSettings mealCount={mealCount} onMealCountChange={setMealCount} />
+            </div>
+          </div>
+        )}
+
         {/* Ingredient Input */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
           <div className="flex items-center justify-between mb-4">
@@ -323,16 +336,6 @@ function App() {
             </div>
           )}
 
-          {/* Settings for empty state */}
-          {ingredients.length === 0 && (
-            <section className="max-w-md mx-auto">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center flex items-center justify-center gap-2">
-                <span className="text-xl">📊</span>
-                Portionsinställningar
-              </h3>
-              <MealSettings mealCount={mealCount} onMealCountChange={setMealCount} />
-            </section>
-          )}
         </div>
       </main>
     </div>
