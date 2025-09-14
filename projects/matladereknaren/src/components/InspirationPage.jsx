@@ -1,6 +1,20 @@
-import { mealPlans } from '../data/mealPlans'
+import { getMealPlansByCategory, getCategoryById, categories } from '../data/mealPlans'
+import CategoryOverview from './CategoryOverview'
 
-function InspirationPage({ onImportMealPlan, onBackToCalculator }) {
+function InspirationPage({ currentCategory, onCategoryChange, onImportMealPlan, onBackToCalculator }) {
+  // Show category overview if no specific category is selected
+  if (!currentCategory || currentCategory === 'all') {
+    return <CategoryOverview onSelectCategory={onCategoryChange} />
+  }
+
+  // Get current category data
+  const category = getCategoryById(currentCategory)
+  const recipes = getMealPlansByCategory(currentCategory)
+
+  if (!category) {
+    return <CategoryOverview onSelectCategory={onCategoryChange} />
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50">
       {/* Header */}
@@ -21,33 +35,58 @@ function InspirationPage({ onImportMealPlan, onBackToCalculator }) {
             <div className="text-center">
               <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
                 <span className="text-3xl">💡</span>
-                Receptinspiration
+                {category.name}
               </h1>
-              <p className="text-gray-600 mt-2">Färdiga recept att importera direkt</p>
+              <p className="text-gray-600 mt-2">{category.description}</p>
             </div>
             <div className="w-32"></div> {/* Spacer for centering */}
           </div>
         </div>
       </div>
 
+      {/* Breadcrumb navigation */}
+      <div className="bg-white border-b border-gray-100">
+        <div className="max-w-6xl mx-auto px-4 py-3">
+          <div className="flex items-center text-sm text-gray-600">
+            <button
+              onClick={() => onCategoryChange('all')}
+              className="hover:text-green-600 transition-colors"
+            >
+              Alla kategorier
+            </button>
+            <svg className="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+            <span className="text-gray-900 font-medium">{category.name}</span>
+            <span className="ml-2 text-gray-500">({recipes.length} recept)</span>
+          </div>
+        </div>
+      </div>
+
       {/* Main content */}
       <main className="max-w-6xl mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Välj ett recept</h2>
-          <p className="text-gray-600">
-            Varje recept är beräknat för flera portioner. Klicka på "Använd i kalkylatorn" för att importera alla ingredienser direkt.
-          </p>
-        </div>
-
-        {/* Meal plan grid */}
+        {/* Recipe grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {mealPlans.map((plan) => (
+          {recipes.map((plan) => (
             <MealPlanCard
               key={plan.id}
               plan={plan}
               onImport={() => onImportMealPlan(plan)}
             />
           ))}
+        </div>
+
+        {/* Back to categories button */}
+        <div className="mt-12 text-center">
+          <button
+            onClick={() => onCategoryChange('all')}
+            className="inline-flex items-center px-6 py-3 bg-white border-2 border-green-200 text-green-700 font-medium rounded-lg hover:bg-green-50 hover:border-green-300 transition-colors"
+          >
+            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Se alla kategorier
+          </button>
         </div>
       </main>
     </div>
@@ -63,8 +102,12 @@ function MealPlanCard({ plan, onImport }) {
         return 'bg-red-500'
       case 'family':
         return 'bg-yellow-500'
-      case 'vegetarian':
+      case 'lchf':
         return 'bg-green-500'
+      case 'vegetarian':
+        return 'bg-emerald-500'
+      case 'quick':
+        return 'bg-purple-500'
       default:
         return 'bg-gray-500'
     }
@@ -78,8 +121,12 @@ function MealPlanCard({ plan, onImport }) {
         return 'bg-red-50 border-red-200'
       case 'family':
         return 'bg-yellow-50 border-yellow-200'
-      case 'vegetarian':
+      case 'lchf':
         return 'bg-green-50 border-green-200'
+      case 'vegetarian':
+        return 'bg-emerald-50 border-emerald-200'
+      case 'quick':
+        return 'bg-purple-50 border-purple-200'
       default:
         return 'bg-gray-50 border-gray-200'
     }

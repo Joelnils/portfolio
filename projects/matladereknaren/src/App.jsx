@@ -11,6 +11,7 @@ import { parseIngredient, lookupNutrition, calculateNutrition } from './utils/nu
 
 function App() {
   const [currentPage, setCurrentPage] = useState('calculator')
+  const [currentCategory, setCurrentCategory] = useState('all')
   const [ingredients, setIngredients] = useState([])
   const [nutritionData, setNutritionData] = useState({})
   const [mealCount, setMealCount] = useState(7)
@@ -147,12 +148,20 @@ function App() {
     }
   }, [])
 
+  // Navigate to inspiration with category
+  const navigateToInspiration = (category = 'all') => {
+    setCurrentCategory(category)
+    setCurrentPage('inspiration')
+  }
+
   // Show inspiration page
   if (currentPage === 'inspiration') {
     return (
       <div className="min-h-screen bg-gray-50">
         <BackLink />
         <InspirationPage
+          currentCategory={currentCategory}
+          onCategoryChange={setCurrentCategory}
           onImportMealPlan={importMealPlan}
           onBackToCalculator={() => setCurrentPage('calculator')}
         />
@@ -180,7 +189,7 @@ function App() {
               <h2 className="text-xl font-semibold text-gray-900">Lägg till ingredienser</h2>
             </div>
             <button
-              onClick={() => setCurrentPage('inspiration')}
+              onClick={() => navigateToInspiration()}
               className="px-4 py-2 text-green-600 hover:text-green-700 hover:bg-green-50 rounded-lg transition-colors text-sm font-medium flex items-center gap-2"
             >
               <span className="text-lg">💡</span>
@@ -195,7 +204,7 @@ function App() {
                 <strong>Ny här?</strong> Börja enkelt med våra färdiga veckomenyer!
               </p>
               <button
-                onClick={() => setCurrentPage('inspiration')}
+                onClick={() => navigateToInspiration()}
                 className="text-green-700 hover:text-green-800 text-sm font-medium underline"
               >
                 Se färdiga exempel →
