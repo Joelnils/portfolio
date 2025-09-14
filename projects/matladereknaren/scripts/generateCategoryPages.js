@@ -119,13 +119,12 @@ function generateRecipeCard(recipe) {
       <div class="ingredients-section">
         <h4 class="section-title">Ingredienser (${recipe.ingredients.length} st)</h4>
         <div class="ingredients-list">
-          ${recipe.ingredients.slice(0, 4).map(ing =>
+          ${recipe.ingredients.map(ing =>
             `<div class="ingredient-item">
               <span class="ingredient-name">${ing.name}</span>
               <span class="ingredient-amount">${ing.quantity} ${ing.unit}</span>
             </div>`
           ).join('')}
-          ${recipe.ingredients.length > 4 ? `<div class="ingredient-more">...och ${recipe.ingredients.length - 4} till</div>` : ''}
         </div>
       </div>
 
@@ -391,8 +390,6 @@ function generateCategoryPage(category) {
       }
       .ingredients-list {
         font-size: 0.75rem;
-        max-height: 6rem;
-        overflow: hidden;
       }
       .ingredient-item {
         display: flex;
@@ -409,11 +406,6 @@ function generateCategoryPage(category) {
       .ingredient-amount {
         color: #9ca3af;
         font-weight: 500;
-      }
-      .ingredient-more {
-        color: #9ca3af;
-        font-style: italic;
-        padding: 0.25rem 0;
       }
       .recipe-instructions {
         margin-bottom: 1.5rem;
