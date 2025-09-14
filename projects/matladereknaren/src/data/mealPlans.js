@@ -46,6 +46,32 @@ export const mealPlans = [
     tags: ['budget', 'familj', 'snabbt', 'barnvänligt']
   },
   {
+    id: 'kanelbulle-ugnsgrota-budget',
+    name: 'Kanelbulle-ugnsgröt',
+    description: 'Mysig ugnsgröt med kanelsmak som påminner om kanelbullar. Perfekt frukost för hela familjen! 🥣✨',
+    category: 'budget',
+    mealType: ['breakfast'],
+    estimatedCost: '36 kr totalt (ca 6 kr/portion)',
+    servings: 6,
+    difficulty: 'Lätt',
+    prepTime: '35 min (5 min förberedelse + 30 min ugn)',
+    ingredients: [
+      { name: 'havregryn', quantity: 270, unit: 'g' },
+      { name: 'havredryck vanilj', quantity: 550, unit: 'ml' },
+      { name: 'ägg', quantity: 3, unit: 'st' },
+      { name: 'banan mogen', quantity: 1, unit: 'st' },
+      { name: 'bakpulver', quantity: 2, unit: 'tsk' },
+      { name: 'salt', quantity: 1, unit: 'krm' },
+      { name: 'brun farin', quantity: 3, unit: 'msk' },
+      { name: 'kanel', quantity: 2, unit: 'tsk' },
+      { name: 'rapsolja', quantity: 1, unit: 'msk' }
+    ],
+    recipe: {
+      instructions: '1. Sätt ugnen på 200°C. 2. Mosa bananen och vispa ihop med äggen. 3. Rör ner havregryn, havredryck, bakpulver och salt. Häll i ugnsform (20×30 cm). 4. Blanda farin, kanel och olja. Ringla över smeten och dra med kniv för marmorerat mönster. 5. Grädda 25-30 min tills gyllene. Servera med bär eller yoghurt!'
+    },
+    tags: ['budget', 'frukost', 'familj', 'vegetarisk', 'meal prep']
+  },
+  {
     id: 'aggomelett-budget',
     name: 'Näringsrik äggomelett',
     description: 'Proteinrik frukost eller lunch med grönsaker. 4 mättande portioner.',
