@@ -1,8 +1,26 @@
-import { writeFileSync, mkdirSync } from 'fs'
+import { writeFileSync, mkdirSync, readFileSync } from 'fs'
 import { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
+
+// Import the actual meal plans data
+const mealPlansPath = join(__dirname, '../src/data/mealPlans.js')
+const mealPlansContent = readFileSync(mealPlansPath, 'utf8')
+
+// Extract mealPlans array from the file (simple regex extraction)
+const mealPlansMatch = mealPlansContent.match(/export const mealPlans = (\[[\s\S]*?\n\])/m)
+if (!mealPlansMatch) {
+  throw new Error('Could not extract mealPlans from mealPlans.js')
+}
+
+// Parse the meal plans (we'll use a simple eval since this is a build script)
+const mealPlans = eval(mealPlansMatch[1])
+
+// Helper function to get recipes by category
+function getRecipesByCategory(categoryId) {
+  return mealPlans.filter(recipe => recipe.category === categoryId)
+}
 
 // Category definitions with SEO data
 const categories = [
@@ -12,12 +30,7 @@ const categories = [
     description: 'Näringsrik mat utan att spendera för mycket',
     slug: 'budget',
     seoTitle: 'Budgetrecept - Matplan Näringsberäkning',
-    seoDescription: 'Billiga och näringsrika recept för den som vill äta bra utan att spendera för mycket. Importera ingredienser direkt.',
-    recipes: [
-      'Kyckling och ris med grönsaker - 6 portioner (~80-100 kr)',
-      'Enkel pastasås med kött - 5 portioner (~60-80 kr)',
-      'Näringsrik äggomelett - 4 portioner (~40-50 kr)'
-    ]
+    seoDescription: 'Billiga och näringsrika recept för den som vill äta bra utan att spendera för mycket. Importera ingredienser direkt.'
   },
   {
     id: 'fitness',
@@ -25,24 +38,15 @@ const categories = [
     description: 'För dig som tränar och vill maximera protein',
     slug: 'fitness',
     seoTitle: 'Proteinrika Recept för Träning - Matplan',
-    seoDescription: 'Proteinrika recept perfekta för träning och muskelbygge. Omega-3, quinoa och magert kött med näringsberäkning.',
-    recipes: [
-      'Bakad lax med quinoa och broccoli - 4 portioner (~150-180 kr)',
-      'Kycklingwok med spenat och sötpotatis - 5 portioner (~90-110 kr)',
-      'Proteinrik äggröra med keso - 3 portioner (~50-65 kr)'
-    ]
+    seoDescription: 'Proteinrika recept perfekta för träning och muskelbygge. Omega-3, quinoa och magert kött med näringsberäkning.'
   },
   {
-    id: 'familj',
+    id: 'family',
     name: 'Familjerecept',
     description: 'Barnvänliga rätter hela familjen gillar',
     slug: 'familj',
     seoTitle: 'Barnvänliga Familjerecept - Matplan',
-    seoDescription: 'Enkla recept som hela familjen gillar. Klassiska rätter barn älskar med näringsberäkning och kostnader.',
-    recipes: [
-      'Krämig korvgryta med potatis - 6 portioner (~80-100 kr)',
-      'Fiskpinnar med potatismos och ärtor - 4 portioner (~60-75 kr)'
-    ]
+    seoDescription: 'Enkla recept som hela familjen gillar. Klassiska rätter barn älskar med näringsberäkning och kostnader.'
   },
   {
     id: 'lchf',
@@ -50,40 +54,102 @@ const categories = [
     description: 'Låg kolhydrat, hög fett',
     slug: 'lchf',
     seoTitle: 'LCHF & Keto Recept - Matplan Kalkylator',
-    seoDescription: 'Låg kolhydrat recept för LCHF och keto-dieter. Beräkna näringsvärden och kostnader för ketogena måltider.',
-    recipes: [
-      'Krämig laxsallad med avokado - 4 portioner (~120-140 kr)',
-      'Kycklinggratäng med broccoli - 5 portioner (~100-120 kr)'
-    ]
+    seoDescription: 'Låg kolhydrat recept för LCHF och keto-dieter. Beräkna näringsvärden och kostnader för ketogena måltider.'
   },
   {
-    id: 'vegetariskt',
+    id: 'vegetarian',
     name: 'Vegetariska Recept',
     description: 'Växtbaserad näring',
     slug: 'vegetariskt',
     seoTitle: 'Vegetariska Recept - Matplan Näringsberäkning',
-    seoDescription: 'Vegetariska och veganska recept med hög proteinandel. Linser, quinoa och växtbaserad näring med kalkylator.',
-    recipes: [
-      'Kryddig röd linsgryta med kokosmjölk - 6 portioner (~70-90 kr)',
-      'Färgglad quinoa-bowl med tahini - 4 portioner (~80-100 kr)'
-    ]
+    seoDescription: 'Vegetariska och veganska recept med hög proteinandel. Linser, quinoa och växtbaserad näring med kalkylator.'
   },
   {
-    id: 'snabbt',
+    id: 'quick',
     name: 'Snabba Måltider',
     description: 'Under 20 minuter',
     slug: 'snabbt',
     seoTitle: 'Snabba Recept Under 20 Min - Matplan',
-    seoDescription: 'Snabba och enkla recept som tillagas på under 20 minuter. Perfekt för vardagen med näringsberäkning.',
-    recipes: [
-      'Snabb äggröra med skinka och ost - 2 portioner (~40-50 kr) - 10 min',
-      'Pastasallad med färdig pesto - 4 portioner (~60-75 kr) - 15 min'
-    ]
+    seoDescription: 'Snabba och enkla recept som tillagas på under 20 minuter. Perfekt för vardagen med näringsberäkning.'
   }
 ]
 
+// Function to generate recipe card HTML
+function generateRecipeCard(recipe) {
+  const categoryColors = {
+    budget: { bg: 'bg-blue-50', border: 'border-blue-200', badge: 'bg-blue-500' },
+    fitness: { bg: 'bg-red-50', border: 'border-red-200', badge: 'bg-red-500' },
+    family: { bg: 'bg-yellow-50', border: 'border-yellow-200', badge: 'bg-yellow-500' },
+    lchf: { bg: 'bg-green-50', border: 'border-green-200', badge: 'bg-green-500' },
+    vegetarian: { bg: 'bg-emerald-50', border: 'border-emerald-200', badge: 'bg-emerald-500' },
+    quick: { bg: 'bg-purple-50', border: 'border-purple-200', badge: 'bg-purple-500' }
+  }
+
+  const colors = categoryColors[recipe.category] || categoryColors.budget
+
+  return `
+    <div class="recipe-card ${colors.bg} ${colors.border}">
+      <div class="card-header">
+        <div class="card-title-row">
+          <h3 class="recipe-title">${recipe.name}</h3>
+          <span class="category-badge ${colors.badge}">${recipe.category}</span>
+        </div>
+        <p class="recipe-description">${recipe.description}</p>
+
+        <div class="recipe-stats">
+          <div class="stat">
+            <span class="stat-label">Kostnad:</span>
+            <span class="stat-value">${recipe.estimatedCost}</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Portioner:</span>
+            <span class="stat-value">${recipe.servings} st</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Svårighet:</span>
+            <span class="stat-value">${recipe.difficulty}</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Tid:</span>
+            <span class="stat-value">${recipe.prepTime}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ingredients-section">
+        <h4 class="section-title">Ingredienser (${recipe.ingredients.length} st)</h4>
+        <div class="ingredients-list">
+          ${recipe.ingredients.slice(0, 4).map(ing =>
+            `<div class="ingredient-item">
+              <span class="ingredient-name">${ing.name}</span>
+              <span class="ingredient-amount">${ing.quantity} ${ing.unit}</span>
+            </div>`
+          ).join('')}
+          ${recipe.ingredients.length > 4 ? `<div class="ingredient-more">...och ${recipe.ingredients.length - 4} till</div>` : ''}
+        </div>
+      </div>
+
+      <div class="recipe-instructions">
+        <h4 class="section-title">Tillagning</h4>
+        <p class="instructions-text">${recipe.recipe.instructions}</p>
+      </div>
+
+      <div class="recipe-tags">
+        ${recipe.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+      </div>
+
+      <div class="card-action">
+        <a href="../" class="import-button">
+          🍱 Använd i kalkylatorn
+        </a>
+      </div>
+    </div>
+  `
+}
+
 function generateCategoryPage(category) {
-  const recipeList = category.recipes.map(recipe => `<li class="text-gray-700">${recipe}</li>`).join('\n        ')
+  const recipes = getRecipesByCategory(category.id)
+  const recipeCards = recipes.map(recipe => generateRecipeCard(recipe)).join('\n')
 
   return `<!doctype html>
 <html lang="sv">
@@ -138,7 +204,7 @@ function generateCategoryPage(category) {
         "@type": "ItemList",
         "name": "${category.name}",
         "description": "${category.description}",
-        "numberOfItems": ${category.recipes.length}
+        "numberOfItems": ${recipes.length}
       },
       "breadcrumb": {
         "@type": "BreadcrumbList",
@@ -244,6 +310,175 @@ function generateCategoryPage(category) {
       .back-link:hover {
         color: #059669;
       }
+
+      /* Recipe Card Styles */
+      .recipes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 2rem;
+        margin: 2rem 0;
+      }
+      .recipe-card {
+        background: white;
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        border: 2px solid;
+        transition: all 0.3s;
+      }
+      .recipe-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px -4px rgb(0 0 0 / 0.1);
+      }
+      .card-header {
+        margin-bottom: 1.5rem;
+      }
+      .card-title-row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: 0.75rem;
+      }
+      .recipe-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin: 0;
+        flex: 1;
+        margin-right: 1rem;
+      }
+      .category-badge {
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        text-transform: uppercase;
+      }
+      .recipe-description {
+        color: #6b7280;
+        font-size: 0.875rem;
+        margin-bottom: 1rem;
+        line-height: 1.5;
+      }
+      .recipe-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+        font-size: 0.75rem;
+      }
+      .stat {
+        display: flex;
+        flex-direction: column;
+      }
+      .stat-label {
+        color: #9ca3af;
+        font-weight: 500;
+      }
+      .stat-value {
+        color: #1f2937;
+        font-weight: 600;
+        margin-top: 0.125rem;
+      }
+      .section-title {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin: 0 0 0.75rem 0;
+      }
+      .ingredients-section {
+        margin-bottom: 1.5rem;
+      }
+      .ingredients-list {
+        font-size: 0.75rem;
+        max-height: 6rem;
+        overflow: hidden;
+      }
+      .ingredient-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.25rem 0;
+        border-bottom: 1px solid #f3f4f6;
+      }
+      .ingredient-item:last-child {
+        border-bottom: none;
+      }
+      .ingredient-name {
+        color: #374151;
+      }
+      .ingredient-amount {
+        color: #9ca3af;
+        font-weight: 500;
+      }
+      .ingredient-more {
+        color: #9ca3af;
+        font-style: italic;
+        padding: 0.25rem 0;
+      }
+      .recipe-instructions {
+        margin-bottom: 1.5rem;
+      }
+      .instructions-text {
+        color: #6b7280;
+        font-size: 0.75rem;
+        line-height: 1.6;
+      }
+      .recipe-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+        margin-bottom: 1.5rem;
+      }
+      .tag {
+        background: #f3f4f6;
+        color: #6b7280;
+        padding: 0.25rem 0.5rem;
+        border-radius: 8px;
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+      .card-action {
+        padding-top: 1rem;
+        border-top: 1px solid #f3f4f6;
+      }
+      .import-button {
+        display: inline-block;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.875rem;
+        box-shadow: 0 2px 4px -1px rgb(0 0 0 / 0.1);
+        transition: all 0.2s;
+        width: 100%;
+        text-align: center;
+      }
+      .import-button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px -2px rgb(0 0 0 / 0.1);
+      }
+
+      /* Color classes */
+      .bg-blue-50 { background-color: #eff6ff; }
+      .border-blue-200 { border-color: #bfdbfe; }
+      .bg-blue-500 { background-color: #3b82f6; }
+      .bg-red-50 { background-color: #fef2f2; }
+      .border-red-200 { border-color: #fecaca; }
+      .bg-red-500 { background-color: #ef4444; }
+      .bg-yellow-50 { background-color: #fffbeb; }
+      .border-yellow-200 { border-color: #fde68a; }
+      .bg-yellow-500 { background-color: #eab308; }
+      .bg-green-50 { background-color: #f0fdf4; }
+      .border-green-200 { border-color: #bbf7d0; }
+      .bg-green-500 { background-color: #22c55e; }
+      .bg-emerald-50 { background-color: #ecfdf5; }
+      .border-emerald-200 { border-color: #a7f3d0; }
+      .bg-emerald-500 { background-color: #10b981; }
+      .bg-purple-50 { background-color: #faf5ff; }
+      .border-purple-200 { border-color: #e9d5ff; }
+      .bg-purple-500 { background-color: #a855f7; }
     </style>
   </head>
   <body>
@@ -256,13 +491,12 @@ function generateCategoryPage(category) {
         <a href="../" class="cta-button">🍱 Öppna Matplan Kalkylator</a>
       </div>
 
-      <div class="content">
-        <h2 style="color: #1f2937; margin-top: 0;">Recept i denna kategori:</h2>
-        <ul class="recipe-list">
-        ${recipeList}
-        </ul>
+      <div class="recipes-grid">
+        ${recipeCards}
+      </div>
 
-        <p style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #f3f4f6; color: #6b7280;">
+      <div class="content">
+        <p style="color: #6b7280; text-align: center;">
           <strong>Så fungerar det:</strong> Öppna kalkylatorn ovan och klicka på "💡 Inspiration" för att importera något av dessa recept direkt.
           Alla ingredienser läggs automatiskt till och näringsvärden beräknas åt dig!
         </p>
@@ -400,7 +634,7 @@ const overviewPage = `<!doctype html>
           <div class="category-card">
             <h2><a href="${cat.slug}/">${cat.name}</a></h2>
             <p>${cat.description}</p>
-            <span class="recipe-count">${cat.recipes.length} recept</span>
+            <span class="recipe-count">${getRecipesByCategory(cat.id).length} recept</span>
           </div>
         `).join('')}
       </div>
