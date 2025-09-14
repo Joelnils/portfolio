@@ -21,9 +21,9 @@ function InspirationPage({ onImportMealPlan, onBackToCalculator }) {
             <div className="text-center">
               <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
                 <span className="text-3xl">💡</span>
-                Inspiration & Veckomenyer
+                Receptinspiration
               </h1>
-              <p className="text-gray-600 mt-2">Färdiga exempel att börja med</p>
+              <p className="text-gray-600 mt-2">Färdiga recept att importera direkt</p>
             </div>
             <div className="w-32"></div> {/* Spacer for centering */}
           </div>
@@ -33,9 +33,9 @@ function InspirationPage({ onImportMealPlan, onBackToCalculator }) {
       {/* Main content */}
       <main className="max-w-6xl mx-auto px-4 py-8">
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Välj en färdig veckomeny</h2>
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">Välj ett recept</h2>
           <p className="text-gray-600">
-            Klicka på "Använd i kalkylatorn" för att importera alla ingredienser direkt till ditt verktyg.
+            Varje recept är beräknat för flera portioner. Klicka på "Använd i kalkylatorn" för att importera alla ingredienser direkt.
           </p>
         </div>
 
@@ -134,16 +134,11 @@ function MealPlanCard({ plan, onImport }) {
         </div>
       </div>
 
-      {/* Recipes preview */}
+      {/* Recipe instructions */}
       <div className="px-6 pb-4">
-        <h4 className="text-sm font-medium text-gray-900 mb-2">Receptförslag ({plan.recipes.length} st)</h4>
-        <div className="space-y-2">
-          {plan.recipes.map((recipe, index) => (
-            <div key={index} className="text-xs">
-              <div className="font-medium text-gray-800">{recipe.name}</div>
-              <div className="text-gray-600 leading-relaxed">{recipe.instructions}</div>
-            </div>
-          ))}
+        <h4 className="text-sm font-medium text-gray-900 mb-2">Tillagning</h4>
+        <div className="text-xs text-gray-600 leading-relaxed">
+          {plan.recipe.instructions}
         </div>
       </div>
 
