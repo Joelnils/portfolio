@@ -146,9 +146,67 @@ function generateRecipeCard(recipe) {
   `
 }
 
+function groupRecipesByMealType(recipes) {
+  const grouped = {
+    breakfast: [],
+    lunch: [],
+    dinner: [],
+    snack: []
+  }
+
+  recipes.forEach(recipe => {
+    if (recipe.mealType) {
+      recipe.mealType.forEach(mealType => {
+        if (grouped[mealType]) {
+          grouped[mealType].push(recipe)
+        }
+      })
+    }
+  })
+
+  return grouped
+}
+
+function generateMealTypeSection(mealType, recipes, mealTypeNames) {
+  if (recipes.length === 0) return ''
+
+  const mealTypeName = mealTypeNames[mealType]
+  const mealIcon = {
+    breakfast: '🌅',
+    lunch: '🥪',
+    dinner: '🍽️',
+    snack: '🍎'
+  }[mealType]
+
+  return `
+    <div class="meal-type-section">
+      <h2 class="meal-type-title">
+        <span class="meal-icon">${mealIcon}</span>
+        ${mealTypeName} (${recipes.length} recept)
+      </h2>
+      <div class="recipes-grid">
+        ${recipes.map(recipe => generateRecipeCard(recipe)).join('\n')}
+      </div>
+    </div>
+  `
+}
+
 function generateCategoryPage(category) {
   const recipes = getRecipesByCategory(category.id)
-  const recipeCards = recipes.map(recipe => generateRecipeCard(recipe)).join('\n')
+  const groupedRecipes = groupRecipesByMealType(recipes)
+
+  const mealTypeNames = {
+    breakfast: 'Frukost',
+    lunch: 'Lunch',
+    dinner: 'Middag',
+    snack: 'Mellanmål'
+  }
+
+  // Generate sections for each meal type that has recipes
+  const mealTypeSections = ['breakfast', 'lunch', 'dinner', 'snack']
+    .map(mealType => generateMealTypeSection(mealType, groupedRecipes[mealType], mealTypeNames))
+    .filter(section => section !== '')
+    .join('\n')
 
   return `<!doctype html>
 <html lang="sv">
@@ -310,12 +368,31 @@ function generateCategoryPage(category) {
         color: #059669;
       }
 
+      /* Meal Type Section Styles */
+      .meal-type-section {
+        margin: 3rem 0;
+      }
+      .meal-type-title {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 2rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 3px solid #10b981;
+      }
+      .meal-icon {
+        font-size: 2rem;
+      }
+
       /* Recipe Card Styles */
       .recipes-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
         gap: 2rem;
-        margin: 2rem 0;
+        margin-bottom: 2rem;
       }
       .recipe-card {
         background: white;
@@ -484,9 +561,7 @@ function generateCategoryPage(category) {
         <a href="../../" class="cta-button">🍱 Öppna Matplan Kalkylator</a>
       </div>
 
-      <div class="recipes-grid">
-        ${recipeCards}
-      </div>
+      ${mealTypeSections}
 
       <div class="content">
         <p style="color: #6b7280; text-align: center;">
