@@ -110,6 +110,9 @@ function App() {
     setIngredients([])
     setNutritionData({})
 
+    // Set meal count to match recipe servings
+    setMealCount(mealPlan.servings)
+
     // Add all ingredients from meal plan
     for (const ingredient of mealPlan.ingredients) {
       const newIngredient = {
