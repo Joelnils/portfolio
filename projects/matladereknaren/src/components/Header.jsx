@@ -45,6 +45,11 @@ function Header() {
             </div>
 
             {/* Recipe Categories Navigation */}
+            <div className="mb-4">
+              <p className="text-green-100 text-lg font-medium">
+                Behöver du matinspiration? Kika in på någon av kategorierna!
+              </p>
+            </div>
             <nav className="flex flex-wrap justify-center gap-2">
               <a
                 href="inspiration/"
