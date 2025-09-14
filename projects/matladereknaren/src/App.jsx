@@ -7,6 +7,7 @@ import NutritionSummary from './components/NutritionSummary'
 import LiveSummaryBar from './components/LiveSummaryBar'
 import BackLink from './components/BackLink'
 import InspirationPage from './components/InspirationPage'
+import Footer from './components/Footer'
 import { parseIngredient, lookupNutrition, calculateNutrition } from './utils/nutrition'
 import { getAllRecipes } from './data/mealPlans'
 
@@ -189,6 +190,7 @@ function App() {
           onImportMealPlan={importMealPlan}
           onBackToCalculator={() => setCurrentPage('calculator')}
         />
+        <Footer />
       </div>
     )
   }
@@ -356,6 +358,7 @@ function App() {
 
         </div>
       </main>
+      <Footer />
     </div>
   )
 }

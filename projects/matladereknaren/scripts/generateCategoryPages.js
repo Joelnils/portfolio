@@ -569,6 +569,56 @@ function generateCategoryPage(category) {
           Näringsvärden och kostnader beräknas direkt åt dig!
         </p>
       </div>
+
+      <!-- Footer -->
+      <footer style="background: white; border-top: 1px solid #e5e7eb; margin-top: 4rem; border-radius: 16px;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+            <!-- Brand Section -->
+            <div>
+              <h3 style="color: #1f2937; font-size: 1.125rem; font-weight: 600; margin: 0 0 1rem 0;">Matplan</h3>
+              <p style="color: #6b7280; font-size: 0.875rem; line-height: 1.5; margin: 0;">
+                Beräkna näringsvärden för hela veckohandlingen och se hur många matlådor det blir.
+                Enkelt, gratis och utan registrering.
+              </p>
+            </div>
+
+            <!-- Links Section -->
+            <div>
+              <h4 style="color: #1f2937; font-size: 1rem; font-weight: 500; margin: 0 0 1rem 0;">Utforska</h4>
+              <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <a href="../" style="color: #6b7280; text-decoration: none; font-size: 0.875rem; transition: color 0.2s;">Receptinspiration</a>
+                <a href="../budget/" style="color: #6b7280; text-decoration: none; font-size: 0.875rem; transition: color 0.2s;">Budgetrecept</a>
+                <a href="../fitness/" style="color: #6b7280; text-decoration: none; font-size: 0.875rem; transition: color 0.2s;">Fitnessrecept</a>
+                <a href="../vegetariskt/" style="color: #6b7280; text-decoration: none; font-size: 0.875rem; transition: color 0.2s;">Vegetariska recept</a>
+              </div>
+            </div>
+
+            <!-- Contact/Info Section -->
+            <div>
+              <h4 style="color: #1f2937; font-size: 1rem; font-weight: 500; margin: 0 0 1rem 0;">Om projektet</h4>
+              <p style="color: #6b7280; font-size: 0.875rem; line-height: 1.5; margin: 0 0 0.75rem 0;">
+                Skapat för att förenkla meal prep och veckoplanering av mat.
+              </p>
+              <a href="https://joelfredriksson.com" style="color: #10b981; text-decoration: none; font-size: 0.875rem; transition: color 0.2s;" target="_blank" rel="noopener noreferrer">
+                Av Joel Fredriksson →
+              </a>
+            </div>
+          </div>
+
+          <!-- Bottom Section -->
+          <div style="border-top: 1px solid #e5e7eb; padding-top: 1.5rem; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+            <p style="color: #9ca3af; font-size: 0.875rem; margin: 0;">
+              © ${new Date().getFullYear()} Matplan. Alla rättigheter förbehållna.
+            </p>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+              <span style="color: #9ca3af; font-size: 0.875rem;">Gjord med</span>
+              <span style="color: #ef4444;">❤️</span>
+              <span style="color: #9ca3af; font-size: 0.875rem;">i Sverige</span>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   </body>
 </html>`
@@ -706,6 +756,56 @@ const overviewPage = `<!doctype html>
           </div>
         `).join('')}
       </div>
+
+      <!-- Footer -->
+      <footer style="background: white; border-top: 1px solid #e5e7eb; margin-top: 4rem; border-radius: 16px;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+            <!-- Brand Section -->
+            <div>
+              <h3 style="color: #1f2937; font-size: 1.125rem; font-weight: 600; margin: 0 0 1rem 0;">Matplan</h3>
+              <p style="color: #6b7280; font-size: 0.875rem; line-height: 1.5; margin: 0;">
+                Beräkna näringsvärden för hela veckohandlingen och se hur många matlådor det blir.
+                Enkelt, gratis och utan registrering.
+              </p>
+            </div>
+
+            <!-- Links Section -->
+            <div>
+              <h4 style="color: #1f2937; font-size: 1rem; font-weight: 500; margin: 0 0 1rem 0;">Utforska</h4>
+              <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <a href="../" style="color: #6b7280; text-decoration: none; font-size: 0.875rem; transition: color 0.2s;">Kalkylator</a>
+                <a href="budget/" style="color: #6b7280; text-decoration: none; font-size: 0.875rem; transition: color 0.2s;">Budgetrecept</a>
+                <a href="fitness/" style="color: #6b7280; text-decoration: none; font-size: 0.875rem; transition: color 0.2s;">Fitnessrecept</a>
+                <a href="vegetariskt/" style="color: #6b7280; text-decoration: none; font-size: 0.875rem; transition: color 0.2s;">Vegetariska recept</a>
+              </div>
+            </div>
+
+            <!-- Contact/Info Section -->
+            <div>
+              <h4 style="color: #1f2937; font-size: 1rem; font-weight: 500; margin: 0 0 1rem 0;">Om projektet</h4>
+              <p style="color: #6b7280; font-size: 0.875rem; line-height: 1.5; margin: 0 0 0.75rem 0;">
+                Skapat för att förenkla meal prep och veckoplanering av mat.
+              </p>
+              <a href="https://joelfredriksson.com" style="color: #10b981; text-decoration: none; font-size: 0.875rem; transition: color 0.2s;" target="_blank" rel="noopener noreferrer">
+                Av Joel Fredriksson →
+              </a>
+            </div>
+          </div>
+
+          <!-- Bottom Section -->
+          <div style="border-top: 1px solid #e5e7eb; padding-top: 1.5rem; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+            <p style="color: #9ca3af; font-size: 0.875rem; margin: 0;">
+              © ${new Date().getFullYear()} Matplan. Alla rättigheter förbehållna.
+            </p>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+              <span style="color: #9ca3af; font-size: 0.875rem;">Gjord med</span>
+              <span style="color: #ef4444;">❤️</span>
+              <span style="color: #9ca3af; font-size: 0.875rem;">i Sverige</span>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   </body>
 </html>`
