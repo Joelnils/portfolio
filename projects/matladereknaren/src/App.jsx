@@ -8,6 +8,7 @@ import LiveSummaryBar from './components/LiveSummaryBar'
 import BackLink from './components/BackLink'
 import InspirationPage from './components/InspirationPage'
 import { parseIngredient, lookupNutrition, calculateNutrition } from './utils/nutrition'
+import { getAllRecipes } from './data/mealPlans'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('calculator')
@@ -147,6 +148,26 @@ function App() {
       })
     }
   }, [])
+
+  // Handle URL import parameter
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const importSlug = urlParams.get('import')
+
+    if (importSlug) {
+      // Import the recipe from URL parameter
+      const allRecipes = getAllRecipes()
+      const recipeToImport = allRecipes.find(recipe => recipe.id === importSlug)
+
+      if (recipeToImport) {
+        importMealPlan(recipeToImport)
+
+        // Clean up URL
+        const newUrl = window.location.pathname
+        window.history.replaceState({}, document.title, newUrl)
+      }
+    }
+  }, [importMealPlan])
 
   // Navigate to inspiration with category
   const navigateToInspiration = (category = 'all') => {

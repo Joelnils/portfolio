@@ -381,3 +381,7 @@ export const getMealPlansByCategory = (categoryId) => {
 export const getCategoryById = (id) => {
   return categories.find(cat => cat.id === id)
 }
+
+export const getAllRecipes = () => {
+  return mealPlans
+}

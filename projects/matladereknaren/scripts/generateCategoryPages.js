@@ -139,7 +139,7 @@ function generateRecipeCard(recipe) {
       </div>
 
       <div class="card-action">
-        <a href="../../" class="import-button">
+        <a href="../../?import=${encodeURIComponent(recipe.id)}" class="import-button">
           🍱 Använd i kalkylatorn
         </a>
       </div>
