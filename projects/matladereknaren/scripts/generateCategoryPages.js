@@ -139,7 +139,7 @@ function generateRecipeCard(recipe) {
       </div>
 
       <div class="card-action">
-        <a href="../" class="import-button">
+        <a href="../../" class="import-button">
           🍱 Använd i kalkylatorn
         </a>
       </div>
@@ -442,7 +442,7 @@ function generateCategoryPage(category) {
         border-top: 1px solid #f3f4f6;
       }
       .import-button {
-        display: inline-block;
+        display: block;
         background: linear-gradient(135deg, #10b981 0%, #059669 100%);
         color: white;
         padding: 0.75rem 1.5rem;
@@ -488,7 +488,7 @@ function generateCategoryPage(category) {
       <div class="header">
         <h1 class="title">${category.name}</h1>
         <p class="subtitle">${category.description}</p>
-        <a href="../" class="cta-button">🍱 Öppna Matplan Kalkylator</a>
+        <a href="../../" class="cta-button">🍱 Öppna Matplan Kalkylator</a>
       </div>
 
       <div class="recipes-grid">
