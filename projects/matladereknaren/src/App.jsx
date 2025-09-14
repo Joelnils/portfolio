@@ -204,63 +204,6 @@ function App() {
         mealCount={numericMealCount}
       />
 
-      {/* Category Navigation */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-6xl mx-auto px-4 py-3">
-          <nav className="flex items-center gap-1 overflow-x-auto">
-            <a
-              href="inspiration/"
-              className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors whitespace-nowrap"
-            >
-              <span>💡</span>
-              Inspiration
-            </a>
-            <a
-              href="inspiration/budget/"
-              className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors whitespace-nowrap"
-            >
-              <span>💰</span>
-              Budget
-            </a>
-            <a
-              href="inspiration/fitness/"
-              className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors whitespace-nowrap"
-            >
-              <span>💪</span>
-              Fitness
-            </a>
-            <a
-              href="inspiration/familj/"
-              className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors whitespace-nowrap"
-            >
-              <span>👨‍👩‍👧‍👦</span>
-              Familj
-            </a>
-            <a
-              href="inspiration/lchf/"
-              className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors whitespace-nowrap"
-            >
-              <span>🥑</span>
-              LCHF
-            </a>
-            <a
-              href="inspiration/vegetariskt/"
-              className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors whitespace-nowrap"
-            >
-              <span>🌱</span>
-              Vegetariskt
-            </a>
-            <a
-              href="inspiration/snabbt/"
-              className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors whitespace-nowrap"
-            >
-              <span>⚡</span>
-              Snabbt
-            </a>
-          </nav>
-        </div>
-      </div>
-
       <main className="max-w-6xl mx-auto px-4 py-8">
         {/* Ingredient Input */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">

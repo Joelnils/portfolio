@@ -23,7 +23,7 @@ function Header() {
             </p>
             
             {/* Features */}
-            <div className="flex flex-wrap justify-center gap-6 text-green-200">
+            <div className="flex flex-wrap justify-center gap-6 text-green-200 mb-8">
               <div className="flex items-center">
                 <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -43,6 +43,52 @@ function Header() {
                 Meal prep-optimerad
               </div>
             </div>
+
+            {/* Recipe Categories Navigation */}
+            <nav className="flex flex-wrap justify-center gap-2">
+              <a
+                href="inspiration/"
+                className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors text-sm font-medium backdrop-blur-sm border border-white/20"
+              >
+                Inspiration
+              </a>
+              <a
+                href="inspiration/budget/"
+                className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors text-sm font-medium backdrop-blur-sm border border-white/20"
+              >
+                Budget
+              </a>
+              <a
+                href="inspiration/fitness/"
+                className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors text-sm font-medium backdrop-blur-sm border border-white/20"
+              >
+                Fitness
+              </a>
+              <a
+                href="inspiration/familj/"
+                className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors text-sm font-medium backdrop-blur-sm border border-white/20"
+              >
+                Familj
+              </a>
+              <a
+                href="inspiration/lchf/"
+                className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors text-sm font-medium backdrop-blur-sm border border-white/20"
+              >
+                LCHF
+              </a>
+              <a
+                href="inspiration/vegetariskt/"
+                className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors text-sm font-medium backdrop-blur-sm border border-white/20"
+              >
+                Vegetariskt
+              </a>
+              <a
+                href="inspiration/snabbt/"
+                className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors text-sm font-medium backdrop-blur-sm border border-white/20"
+              >
+                Snabbt
+              </a>
+            </nav>
           </div>
         </div>
       </div>
