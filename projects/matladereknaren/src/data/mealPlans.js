@@ -304,6 +304,283 @@ export const mealPlans = [
       instructions: '1. Koka pasta. 2. Blanda med pesto. 3. Tillsätt mozzarella och tomater. 4. Toppa med rucola.'
     },
     tags: ['snabbt', 'vegetarisk', 'pasta', '15 min']
+  },
+
+  // Additional Budget recipes
+  {
+    id: 'linssoppa-budget',
+    name: 'Krämig linssoppa med morötter',
+    description: 'Mättande och billig proteinrik soppa. Perfekt för 6 portioner.',
+    category: 'budget',
+    estimatedCost: '35-45 kr',
+    servings: 6,
+    difficulty: 'Lätt',
+    prepTime: '40 min',
+    ingredients: [
+      { name: 'röda linser', quantity: 400, unit: 'g' },
+      { name: 'morötter', quantity: 500, unit: 'g' },
+      { name: 'lök', quantity: 200, unit: 'g' },
+      { name: 'kokosmjölk', quantity: 400, unit: 'ml' },
+      { name: 'buljong', quantity: 1000, unit: 'ml' },
+      { name: 'olivolja', quantity: 30, unit: 'ml' }
+    ],
+    recipe: {
+      instructions: '1. Fräs lök och morötter. 2. Tillsätt linser och buljong. 3. Koka 20 min. 4. Mixa halvt, tillsätt kokosmjölk.'
+    },
+    tags: ['budget', 'vegetarisk', 'protein', 'soppa']
+  },
+  {
+    id: 'kyckling-potatis-budget',
+    name: 'Ugnsbakad kyckling med potatis',
+    description: 'Enkel helkött-middag direkt från ugnen. 5 generösa portioner.',
+    category: 'budget',
+    estimatedCost: '75-90 kr',
+    servings: 5,
+    difficulty: 'Lätt',
+    prepTime: '60 min',
+    ingredients: [
+      { name: 'kyckling', quantity: 800, unit: 'g' },
+      { name: 'potatis', quantity: 1000, unit: 'g' },
+      { name: 'gul lök', quantity: 300, unit: 'g' },
+      { name: 'paprika', quantity: 300, unit: 'g' },
+      { name: 'olivolja', quantity: 50, unit: 'ml' },
+      { name: 'vitlök', quantity: 4, unit: 'klyftor' }
+    ],
+    recipe: {
+      instructions: '1. Tärna allt grovt. 2. Blanda med olja och vitlök. 3. Ugn 200°C i 45 min. 4. Vänd en gång halvvägs.'
+    },
+    tags: ['budget', 'ugn', 'hela familjen', 'enkelt']
+  },
+
+  // Additional Fitness recipes
+  {
+    id: 'protein-pannkakor-fitness',
+    name: 'Proteinpannkakor med bär',
+    description: 'Högt proteininnehåll för träning. 3 portioner för frukost.',
+    category: 'fitness',
+    estimatedCost: '45-60 kr',
+    servings: 3,
+    difficulty: 'Lätt',
+    prepTime: '20 min',
+    ingredients: [
+      { name: 'ägg', quantity: 6, unit: 'st' },
+      { name: 'proteinpulver', quantity: 60, unit: 'g' },
+      { name: 'havregryn', quantity: 100, unit: 'g' },
+      { name: 'grekisk yoghurt', quantity: 300, unit: 'g' },
+      { name: 'blåbär', quantity: 200, unit: 'g' },
+      { name: 'kokosolja', quantity: 20, unit: 'ml' }
+    ],
+    recipe: {
+      instructions: '1. Mixa ägg, protein och havregryn. 2. Stek pannkakor i kokosolja. 3. Servera med yoghurt och bär.'
+    },
+    tags: ['fitness', 'protein', 'frukost', 'låg kolhydrat']
+  },
+  {
+    id: 'tonfisk-quinoa-fitness',
+    name: 'Tonfisksallad med quinoa',
+    description: 'Proteinrik lunch för återhämtning. 4 portioner.',
+    category: 'fitness',
+    estimatedCost: '80-95 kr',
+    servings: 4,
+    difficulty: 'Lätt',
+    prepTime: '25 min',
+    ingredients: [
+      { name: 'quinoa', quantity: 200, unit: 'g' },
+      { name: 'tonfisk i vatten', quantity: 300, unit: 'g' },
+      { name: 'avokado', quantity: 2, unit: 'st' },
+      { name: 'rödlök', quantity: 100, unit: 'g' },
+      { name: 'fetaost', quantity: 150, unit: 'g' },
+      { name: 'olivolja', quantity: 40, unit: 'ml' }
+    ],
+    recipe: {
+      instructions: '1. Koka quinoa enligt förpackning. 2. Blanda med tonfisk och tärnad avokado. 3. Tillsätt fetaost och lök.'
+    },
+    tags: ['fitness', 'protein', 'omega-3', 'quinoa']
+  },
+
+  // Additional Family recipes
+  {
+    id: 'kottbullar-potatis-family',
+    name: 'Klassiska köttbullar med potatismos',
+    description: 'Barnens favorit som alla gillar. 6 portioner.',
+    category: 'family',
+    estimatedCost: '85-100 kr',
+    servings: 6,
+    difficulty: 'Medium',
+    prepTime: '50 min',
+    ingredients: [
+      { name: 'blandfärs', quantity: 600, unit: 'g' },
+      { name: 'potatis', quantity: 1200, unit: 'g' },
+      { name: 'ägg', quantity: 1, unit: 'st' },
+      { name: 'mjöl', quantity: 50, unit: 'g' },
+      { name: 'mjölk', quantity: 400, unit: 'ml' },
+      { name: 'smör', quantity: 80, unit: 'g' },
+      { name: 'grädde', quantity: 200, unit: 'ml' }
+    ],
+    recipe: {
+      instructions: '1. Rulla köttbullar av färs och ägg. 2. Stek gyllene. 3. Koka potatis, mosa med mjölk. 4. Gör gräddsås.'
+    },
+    tags: ['familj', 'klassisk', 'barnvänlig', 'svensk husmanskost']
+  },
+  {
+    id: 'fiskpinnar-family',
+    name: 'Hemgjorda fiskpinnar med sötpotatisfries',
+    description: 'Nyttigare version av barnfavoriten. 4 portioner.',
+    category: 'family',
+    estimatedCost: '70-85 kr',
+    servings: 4,
+    difficulty: 'Medium',
+    prepTime: '35 min',
+    ingredients: [
+      { name: 'torskfilé', quantity: 500, unit: 'g' },
+      { name: 'sötpotatis', quantity: 800, unit: 'g' },
+      { name: 'ägg', quantity: 2, unit: 'st' },
+      { name: 'ströbröd', quantity: 100, unit: 'g' },
+      { name: 'mjöl', quantity: 50, unit: 'g' },
+      { name: 'olivolja', quantity: 60, unit: 'ml' }
+    ],
+    recipe: {
+      instructions: '1. Skär fisk i strips, panera. 2. Skär sötpotatis i stavar. 3. Ugn 220°C, 25 min. 4. Servera med dipp.'
+    },
+    tags: ['familj', 'fisk', 'hemgjort', 'ugn']
+  },
+
+  // Additional LCHF recipes
+  {
+    id: 'lchf-omelett-bacon',
+    name: 'Fluffig omelett med bacon och ost',
+    description: 'Perfekt LCHF-frukost med hög fettandel. 2 portioner.',
+    category: 'lchf',
+    estimatedCost: '55-70 kr',
+    servings: 2,
+    difficulty: 'Lätt',
+    prepTime: '15 min',
+    ingredients: [
+      { name: 'ägg', quantity: 6, unit: 'st' },
+      { name: 'bacon', quantity: 120, unit: 'g' },
+      { name: 'cheddarost', quantity: 100, unit: 'g' },
+      { name: 'smör', quantity: 40, unit: 'g' },
+      { name: 'grädde', quantity: 100, unit: 'ml' },
+      { name: 'gräslök', quantity: 20, unit: 'g' }
+    ],
+    recipe: {
+      instructions: '1. Stek bacon knaprig. 2. Vispa ägg med grädde. 3. Gör omelett, fyll med bacon och ost. 4. Toppa med gräslök.'
+    },
+    tags: ['lchf', 'keto', 'frukost', 'hög fett']
+  },
+  {
+    id: 'lchf-zucchini-lasagne',
+    name: 'Zucchini-lasagne med köttfärs',
+    description: 'LCHF-version utan pasta. 6 portioner.',
+    category: 'lchf',
+    estimatedCost: '110-130 kr',
+    servings: 6,
+    difficulty: 'Medium',
+    prepTime: '60 min',
+    ingredients: [
+      { name: 'zucchini', quantity: 800, unit: 'g' },
+      { name: 'köttfärs', quantity: 600, unit: 'g' },
+      { name: 'mozzarella', quantity: 200, unit: 'g' },
+      { name: 'parmesan', quantity: 100, unit: 'g' },
+      { name: 'grädde', quantity: 300, unit: 'ml' },
+      { name: 'ägg', quantity: 2, unit: 'st' }
+    ],
+    recipe: {
+      instructions: '1. Skiva zucchini tunt. 2. Bryn köttfärs. 3. Varva med gräddblandning och ost. 4. Ugn 180°C i 40 min.'
+    },
+    tags: ['lchf', 'keto', 'låg kolhydrat', 'gratäng']
+  },
+
+  // Additional Vegetarian recipes
+  {
+    id: 'vegetarian-chili',
+    name: 'Kryddig bönchili med quinoa',
+    description: 'Proteinrik vegetarisk chili. 5 portioner.',
+    category: 'vegetarian',
+    estimatedCost: '60-75 kr',
+    servings: 5,
+    difficulty: 'Lätt',
+    prepTime: '35 min',
+    ingredients: [
+      { name: 'kidneybönor', quantity: 800, unit: 'g' },
+      { name: 'quinoa', quantity: 200, unit: 'g' },
+      { name: 'krossade tomater', quantity: 800, unit: 'g' },
+      { name: 'paprika', quantity: 300, unit: 'g' },
+      { name: 'lök', quantity: 200, unit: 'g' },
+      { name: 'majs', quantity: 200, unit: 'g' }
+    ],
+    recipe: {
+      instructions: '1. Fräs lök och paprika. 2. Tillsätt tomater och bönor. 3. Låt sjuda 20 min. 4. Servera med kokad quinoa.'
+    },
+    tags: ['vegetarisk', 'protein', 'kryddig', 'quinoa']
+  },
+  {
+    id: 'halloumi-sallad',
+    name: 'Grillad halloumi med rostad sötpotatis',
+    description: 'Näringsrik vegetarisk sallad. 4 portioner.',
+    category: 'vegetarian',
+    estimatedCost: '85-100 kr',
+    servings: 4,
+    difficulty: 'Lätt',
+    prepTime: '30 min',
+    ingredients: [
+      { name: 'halloumi', quantity: 300, unit: 'g' },
+      { name: 'sötpotatis', quantity: 600, unit: 'g' },
+      { name: 'spenat', quantity: 200, unit: 'g' },
+      { name: 'valnötter', quantity: 100, unit: 'g' },
+      { name: 'olivolja', quantity: 50, unit: 'ml' },
+      { name: 'balsamvinäger', quantity: 30, unit: 'ml' }
+    ],
+    recipe: {
+      instructions: '1. Rosta sötpotatis i ugn. 2. Grilla halloumi. 3. Blanda spenat med nötter. 4. Servera med vinägrett.'
+    },
+    tags: ['vegetarisk', 'protein', 'sallad', 'nyttigt']
+  },
+
+  // Additional Quick recipes
+  {
+    id: 'snabb-wraps',
+    name: 'Kycklingwraps med hummus',
+    description: 'Snabb lunch eller middag. 3 portioner på 10 minuter.',
+    category: 'quick',
+    estimatedCost: '55-70 kr',
+    servings: 3,
+    difficulty: 'Lätt',
+    prepTime: '10 min',
+    ingredients: [
+      { name: 'tortillabröd', quantity: 3, unit: 'st' },
+      { name: 'färdig kycklingfilé', quantity: 300, unit: 'g' },
+      { name: 'hummus', quantity: 150, unit: 'g' },
+      { name: 'sallad', quantity: 150, unit: 'g' },
+      { name: 'tomat', quantity: 200, unit: 'g' },
+      { name: 'gurka', quantity: 150, unit: 'g' }
+    ],
+    recipe: {
+      instructions: '1. Värm tortillor. 2. Bre på hummus. 3. Fyll med kyckling och grönsaker. 4. Rulla ihop och skär.'
+    },
+    tags: ['snabbt', 'wrap', 'lunch', '10 min']
+  },
+  {
+    id: 'snabb-risotto',
+    name: 'Krämig svamprisotto',
+    description: 'Snabblagad risotto med färska svamp. 4 portioner.',
+    category: 'quick',
+    estimatedCost: '65-80 kr',
+    servings: 4,
+    difficulty: 'Medium',
+    prepTime: '18 min',
+    ingredients: [
+      { name: 'risottoris', quantity: 300, unit: 'g' },
+      { name: 'blandad svamp', quantity: 400, unit: 'g' },
+      { name: 'parmesan', quantity: 100, unit: 'g' },
+      { name: 'vitt vin', quantity: 200, unit: 'ml' },
+      { name: 'buljong', quantity: 800, unit: 'ml' },
+      { name: 'smör', quantity: 50, unit: 'g' }
+    ],
+    recipe: {
+      instructions: '1. Fräs svamp. 2. Rosta ris kort. 3. Tillsätt vin och buljong gradvis. 4. Rör i parmesan och smör.'
+    },
+    tags: ['snabbt', 'svamp', 'risotto', 'krämig']
   }
 ]
 
