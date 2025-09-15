@@ -160,7 +160,7 @@ const getNutritionData = async (foodId) => {
 // Search for food items in USDA database
 const searchUSDAFood = async (query) => {
   try {
-    const searchUrl = `https://api.nal.usda.gov/fdc/v1/foods/search?query=${encodeURIComponent(query)}&api_key=DEMO_KEY&pageSize=1&dataType=SR%20Legacy,Foundation`;
+    const searchUrl = `https://api.nal.usda.gov/fdc/v1/foods/search?query=${encodeURIComponent(query)}&api_key=45JTH0IMo0z1Ct0N8C9osMppSMhyG3tBy7F3h6JN&pageSize=1&dataType=SR%20Legacy,Foundation`;
     const response = await makeRequest(searchUrl);
 
     if (response && response.foods && response.foods.length > 0) {
