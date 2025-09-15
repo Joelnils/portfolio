@@ -133,10 +133,51 @@ const mockNutritionData = {
   }
 }
 
-// API function to lookup nutrition data
+// Import custom Swedish nutrition database
+import swedishNutrition from '../data/swedishNutrition.json'
+
+// Search custom Swedish nutrition database
+const lookupSwedishNutrition = (ingredientName) => {
+  const query = ingredientName.toLowerCase().trim()
+
+  // Search all categories for the ingredient
+  const categories = Object.keys(swedishNutrition).filter(key => key !== 'metadata')
+
+  for (const category of categories) {
+    const categoryData = swedishNutrition[category]
+    if (categoryData[query]) {
+      const nutrition = categoryData[query]
+      return {
+        success: true,
+        data: {
+          kcal: nutrition.kcal,
+          protein: nutrition.protein,
+          carbs: nutrition.carbs,
+          fat: nutrition.fat,
+          per100g: true
+        },
+        foodName: `${query.charAt(0).toUpperCase() + query.slice(1)}`,
+        source: 'Swedish Nutrition Database',
+        category: category
+      }
+    }
+  }
+
+  return null
+}
+
+// API function to lookup nutrition data with custom database priority
 export const lookupNutrition = async (ingredientName) => {
   try {
-    // Try to use Netlify Function for real API call
+    // Step 1: Try custom Swedish nutrition database first (instant lookup)
+    const swedishResult = lookupSwedishNutrition(ingredientName)
+    if (swedishResult) {
+      console.log(`✅ Found in Swedish database: ${ingredientName}`)
+      return swedishResult
+    }
+
+    // Step 2: Try external APIs if not in custom database
+    console.log(`⚡ Not in Swedish database, trying APIs for: ${ingredientName}`)
     const response = await fetch('/api/nutrition-lookup', {
       method: 'POST',
       headers: {
@@ -146,15 +187,19 @@ export const lookupNutrition = async (ingredientName) => {
         query: ingredientName
       })
     })
-    
+
     if (response.ok) {
       const result = await response.json()
-      return result
-    } else {
-      // Fallback to mock data if API fails
-      console.warn('API call failed, using mock data')
-      return await lookupNutritionMock(ingredientName)
+      if (result.success) {
+        console.log(`✅ Found via API: ${ingredientName}`)
+        return result
+      }
     }
+
+    // Step 3: Final fallback to mock data
+    console.warn(`⚠️ No data found, using mock data for: ${ingredientName}`)
+    return await lookupNutritionMock(ingredientName)
+
   } catch (error) {
     console.warn('Network error, using mock data:', error)
     return await lookupNutritionMock(ingredientName)
