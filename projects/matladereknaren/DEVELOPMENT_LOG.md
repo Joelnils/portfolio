@@ -540,8 +540,14 @@ Consider switching to USDA-only approach with expanded translations instead of d
 - **Production Testing**: Validate custom database performance in live app
 - **Coverage Analysis**: Identify any remaining ingredient gaps in existing recipes
 - **User Experience**: Monitor console logs for lookup source distribution
+- **Database Expansion Priority**: Expand Swedish nutrition database with additional ingredients
+  - Add more regional Swedish products and brands
+  - Include seasonal ingredients (olika svamp, bär varieties, rotfrukter)
+  - Common processed/packaged foods (konserver, frysta produkter, mejerivaror)
+  - User-requested ingredients based on app usage patterns
+  - Target expansion to 150-200 ingredients for comprehensive coverage
 - **Feature Development**: Continue with Calorie Goal Calculator implementation
-- **Database Maintenance**: Plan for incremental ingredient additions
+- **Database Maintenance**: Plan systematic approach for ingredient additions and verification
 
 ### Development Environment
 - Working directory: `C:\Users\joelf\Portfolio webbsite`
