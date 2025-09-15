@@ -342,6 +342,65 @@ Consider switching to USDA-only approach with expanded translations instead of d
 - Meat cuts and seafood varieties
 - Seasonal ingredients and preserved foods
 
+### 🎯 Custom Nutrition Database Idea
+
+**Problem Identified**: External APIs return inconsistent/incorrect data for Swedish context
+- **Example Issues**:
+  - `banan` search returns "Bananas, dehydrated" (346 kcal) instead of fresh banana (~89 kcal)
+  - `havregryn` returns data showing no protein content (incorrect - oats have ~13g protein/100g)
+  - USDA data reflects American/processed products vs Swedish fresh ingredients
+  - Translation may match wrong product variants (dried vs fresh, processed vs raw)
+
+**Proposed Solution**: Create custom Swedish nutrition JSON database
+- **File Structure**: `src/data/swedishNutrition.json`
+- **Data Source**: Verified Swedish nutrition data (Livsmedelsverket tables, trusted sources)
+- **Format**: Standardized per 100g values for consistency
+- **Coverage**: Focus on ingredients commonly used in Swedish recipes
+
+**Benefits of Custom Database**:
+- ✅ **Accuracy**: Real Swedish product nutrition values
+- ✅ **Speed**: Instant lookup (no API calls)
+- ✅ **Reliability**: No rate limits or external dependencies
+- ✅ **Control**: Can verify and correct all nutrition data
+- ✅ **Offline capability**: Works without internet connection
+- ✅ **Cost**: No API key management or usage limits
+
+**Implementation Strategy**:
+```json
+{
+  "banan": {
+    "kcal": 89,
+    "protein": 1.1,
+    "carbs": 22.8,
+    "fat": 0.3,
+    "fiber": 2.6,
+    "source": "Livsmedelsverket",
+    "per100g": true
+  },
+  "havregryn": {
+    "kcal": 379,
+    "protein": 13.2,
+    "carbs": 67.7,
+    "fat": 7.0,
+    "fiber": 10.1,
+    "source": "Verified Swedish data",
+    "per100g": true
+  }
+}
+```
+
+**Hybrid Approach Consideration**:
+1. **Primary**: Custom Swedish nutrition JSON (instant, accurate)
+2. **Secondary**: USDA API for ingredients not in custom database
+3. **Fallback**: Mock data for completely unknown items
+
+**Data Collection Process**:
+- Extract nutrition data from existing Swedish sources
+- Verify against multiple trusted references
+- Focus on ingredients from existing recipes first
+- Build database incrementally based on user searches
+- Allow easy updates and corrections
+
 ### 🔧 Technical Debt & Improvements
 
 **Current Limitations**:
