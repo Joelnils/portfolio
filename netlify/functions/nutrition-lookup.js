@@ -5,11 +5,11 @@ const makeRequest = (url) => {
   return new Promise((resolve, reject) => {
     https.get(url, (res) => {
       let data = '';
-      
+
       res.on('data', (chunk) => {
         data += chunk;
       });
-      
+
       res.on('end', () => {
         try {
           const parsed = JSON.parse(data);
@@ -22,6 +22,46 @@ const makeRequest = (url) => {
       reject(error);
     });
   });
+};
+
+// Swedish to English translation mapping for common ingredients
+const swedishToEnglish = {
+  'ägg': 'eggs',
+  'kyckling': 'chicken',
+  'kycklingfilé': 'chicken breast',
+  'kycklingfärs': 'chicken mince',
+  'ris': 'rice',
+  'potatis': 'potato',
+  'tomat': 'tomato',
+  'lök': 'onion',
+  'vitlök': 'garlic',
+  'morötter': 'carrots',
+  'broccoli': 'broccoli',
+  'spenat': 'spinach',
+  'pasta': 'pasta',
+  'bröd': 'bread',
+  'smör': 'butter',
+  'mjölk': 'milk',
+  'ost': 'cheese',
+  'fisk': 'fish',
+  'lax': 'salmon',
+  'nötkött': 'beef',
+  'fläskkött': 'pork',
+  'köttfärs': 'ground meat',
+  'bönor': 'beans',
+  'linser': 'lentils',
+  'quinoa': 'quinoa',
+  'havre': 'oats',
+  'havregryn': 'oats',
+  'mandel': 'almonds',
+  'nötter': 'nuts',
+  'olivolja': 'olive oil',
+  'rapsolja': 'canola oil',
+  'grädde': 'cream',
+  'yoghurt': 'yogurt',
+  'äpple': 'apple',
+  'banan': 'banana',
+  'avokado': 'avocado'
 };
 
 // Search for food items in Livsmedelsverket database
@@ -43,12 +83,12 @@ const searchFood = async (query) => {
   }
 };
 
-// Get nutrition data for a specific food item
+// Get nutrition data for a specific food item from Livsmedelsverket
 const getNutritionData = async (foodId) => {
   try {
     const nutritionUrl = `https://dataportal.livsmedelsverket.se/livsmedel/api/v1/livsmedel/${foodId}/naringsvarden`;
     const response = await makeRequest(nutritionUrl);
-    
+
     if (response && response.length > 0) {
       // Convert the nutrition array to a more usable format
       const nutritionMap = {};
@@ -58,15 +98,91 @@ const getNutritionData = async (foodId) => {
           unit: item.enhet
         };
       });
-      
+
       return nutritionMap;
     }
-    
+
     return null;
   } catch (error) {
     console.error('Nutrition data error:', error);
     return null;
   }
+};
+
+// Search for food items in USDA database
+const searchUSDAFood = async (query) => {
+  try {
+    const searchUrl = `https://api.nal.usda.gov/fdc/v1/foods/search?query=${encodeURIComponent(query)}&api_key=DEMO_KEY&pageSize=1&dataType=SR%20Legacy,Foundation`;
+    const response = await makeRequest(searchUrl);
+
+    if (response && response.foods && response.foods.length > 0) {
+      // Return the first high-quality match (prefer SR Legacy or Foundation data)
+      const food = response.foods[0];
+
+      // Extract nutrition data directly from the search results
+      const nutritionMap = {};
+      if (food.foodNutrients) {
+        food.foodNutrients.forEach(nutrient => {
+          // Map USDA nutrient names to our expected format
+          switch (nutrient.nutrientName) {
+            case 'Energy':
+              if (nutrient.unitName === 'KCAL') {
+                nutritionMap.kcal = nutrient.value || 0;
+              }
+              break;
+            case 'Protein':
+              nutritionMap.protein = nutrient.value || 0;
+              break;
+            case 'Carbohydrate, by difference':
+              nutritionMap.carbs = nutrient.value || 0;
+              break;
+            case 'Total lipid (fat)':
+              nutritionMap.fat = nutrient.value || 0;
+              break;
+          }
+        });
+      }
+
+      // Ensure we have at least basic nutrition data
+      if (nutritionMap.kcal !== undefined || nutritionMap.protein !== undefined) {
+        return {
+          name: food.description,
+          nutrition: {
+            kcal: nutritionMap.kcal || 0,
+            protein: nutritionMap.protein || 0,
+            carbs: nutritionMap.carbs || 0,
+            fat: nutritionMap.fat || 0,
+            per100g: true
+          }
+        };
+      }
+    }
+
+    return null;
+  } catch (error) {
+    console.error('USDA search error:', error);
+    return null;
+  }
+};
+
+// Try to translate Swedish ingredient to English
+const translateIngredient = (query) => {
+  const lowerQuery = query.toLowerCase().trim();
+
+  // Check for exact matches first
+  if (swedishToEnglish[lowerQuery]) {
+    return swedishToEnglish[lowerQuery];
+  }
+
+  // Check for partial matches (e.g., "kycklingfilé med kryddor" -> "chicken breast")
+  for (const [swedish, english] of Object.entries(swedishToEnglish)) {
+    if (lowerQuery.includes(swedish)) {
+      return english;
+    }
+  }
+
+  // Return original if no translation found
+  return query;
 };
 
 // Main handler function
@@ -115,56 +231,90 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Search for the food item
-    const foodItem = await searchFood(query.trim());
-    
-    if (!foodItem) {
+    const searchQuery = query.trim();
+
+    // Step 1: Try Livsmedelsverket first (Swedish database)
+    let result = null;
+    let dataSource = 'Unknown';
+
+    const foodItem = await searchFood(searchQuery);
+
+    if (foodItem) {
+      const nutritionData = await getNutritionData(foodItem.id);
+
+      if (nutritionData) {
+        // Convert Livsmedelsverket data to our standard format
+        const standardizedData = {
+          kcal: nutritionData['Energi (kcal)']?.value || 0,
+          protein: nutritionData['Protein']?.value || 0,
+          carbs: nutritionData['Kolhydrater']?.value || 0,
+          fat: nutritionData['Fett']?.value || 0,
+          per100g: true
+        };
+
+        result = {
+          success: true,
+          data: standardizedData,
+          foodName: foodItem.namn,
+          source: 'Livsmedelsverket',
+          foodId: foodItem.id
+        };
+        dataSource = 'Livsmedelsverket';
+      }
+    }
+
+    // Step 2: If Livsmedelsverket failed, try USDA with translation
+    if (!result) {
+      console.log(`Livsmedelsverket failed for "${searchQuery}", trying USDA...`);
+
+      // Try with English translation first
+      const translatedQuery = translateIngredient(searchQuery);
+      let usdaResult = null;
+
+      if (translatedQuery !== searchQuery) {
+        console.log(`Translated "${searchQuery}" to "${translatedQuery}"`);
+        usdaResult = await searchUSDAFood(translatedQuery);
+      }
+
+      // If translation didn't work, try original query
+      if (!usdaResult) {
+        usdaResult = await searchUSDAFood(searchQuery);
+      }
+
+      if (usdaResult) {
+        result = {
+          success: true,
+          data: usdaResult.nutrition,
+          foodName: usdaResult.name,
+          source: 'USDA FoodData Central',
+          originalQuery: searchQuery,
+          translatedQuery: translatedQuery !== searchQuery ? translatedQuery : undefined
+        };
+        dataSource = 'USDA';
+      }
+    }
+
+    // Step 3: Return result or error
+    if (result) {
+      console.log(`Successfully found data from ${dataSource} for "${searchQuery}"`);
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify(result)
+      };
+    } else {
+      console.log(`No data found for "${searchQuery}" in any database`);
       return {
         statusCode: 404,
         headers,
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           success: false,
-          error: 'Livsmedel ej hittat i databasen',
-          query: query 
+          error: 'Livsmedel ej hittat i någon databas',
+          query: searchQuery,
+          tried: ['Livsmedelsverket', 'USDA FoodData Central']
         })
       };
     }
-
-    // Get nutrition data
-    const nutritionData = await getNutritionData(foodItem.id);
-    
-    if (!nutritionData) {
-      return {
-        statusCode: 404,
-        headers,
-        body: JSON.stringify({ 
-          success: false,
-          error: 'Näringsdata ej tillgänglig',
-          query: query 
-        })
-      };
-    }
-
-    // Convert to our expected format
-    const standardizedData = {
-      kcal: nutritionData['Energi (kcal)']?.value || 0,
-      protein: nutritionData['Protein']?.value || 0,
-      carbs: nutritionData['Kolhydrater']?.value || 0,
-      fat: nutritionData['Fett']?.value || 0,
-      per100g: true
-    };
-
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify({
-        success: true,
-        data: standardizedData,
-        foodName: foodItem.namn,
-        source: 'Livsmedelsverket',
-        foodId: foodItem.id
-      })
-    };
 
   } catch (error) {
     console.error('Function error:', error);
