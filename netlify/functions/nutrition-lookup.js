@@ -26,42 +26,90 @@ const makeRequest = (url) => {
 
 // Swedish to English translation mapping for common ingredients
 const swedishToEnglish = {
+  // Basic proteins
   'ägg': 'eggs',
   'kyckling': 'chicken',
   'kycklingfilé': 'chicken breast',
   'kycklingfärs': 'chicken mince',
+  'köttfärs': 'ground beef',
+  'nötkött': 'beef',
+  'fläskkött': 'pork',
+  'fisk': 'fish',
+  'lax': 'salmon',
+
+  // Grains and starches
   'ris': 'rice',
+  'pasta': 'pasta',
   'potatis': 'potato',
+  'bröd': 'bread',
+  'havre': 'oats',
+  'havregryn': 'oats',
+  'quinoa': 'quinoa',
+
+  // Vegetables
   'tomat': 'tomato',
   'lök': 'onion',
   'vitlök': 'garlic',
   'morötter': 'carrots',
   'broccoli': 'broccoli',
   'spenat': 'spinach',
-  'pasta': 'pasta',
-  'bröd': 'bread',
-  'smör': 'butter',
-  'mjölk': 'milk',
-  'ost': 'cheese',
-  'fisk': 'fish',
-  'lax': 'salmon',
-  'nötkött': 'beef',
-  'fläskkött': 'pork',
-  'köttfärs': 'ground meat',
-  'bönor': 'beans',
-  'linser': 'lentils',
-  'quinoa': 'quinoa',
-  'havre': 'oats',
-  'havregryn': 'oats',
-  'mandel': 'almonds',
-  'nötter': 'nuts',
-  'olivolja': 'olive oil',
-  'rapsolja': 'canola oil',
-  'grädde': 'cream',
-  'yoghurt': 'yogurt',
+  'krossade tomater': 'crushed tomatoes',
+  'frysta grönsaker': 'frozen vegetables',
+
+  // Fruits
   'äpple': 'apple',
   'banan': 'banana',
-  'avokado': 'avocado'
+  'banan mogen': 'banana ripe',
+  'avokado': 'avocado',
+
+  // Dairy and alternatives
+  'mjölk': 'milk',
+  'smör': 'butter',
+  'ost': 'cheese',
+  'grädde': 'cream',
+  'yoghurt': 'yogurt',
+  'havredryck': 'oat milk',
+  'havredryck vanilj': 'oat milk vanilla',
+  'havredryck naturell': 'oat milk plain',
+
+  // Oils and fats
+  'olivolja': 'olive oil',
+  'rapsolja': 'canola oil',
+  'kokosolja': 'coconut oil',
+
+  // Legumes and nuts
+  'bönor': 'beans',
+  'linser': 'lentils',
+  'mandel': 'almonds',
+  'nötter': 'nuts',
+  'cashewnötter': 'cashews',
+  'jordnötter': 'peanuts',
+
+  // Baking and spices
+  'bakpulver': 'baking powder',
+  'bikarbonat': 'baking soda',
+  'salt': 'salt',
+  'socker': 'sugar',
+  'brun farin': 'brown sugar',
+  'strösocker': 'granulated sugar',
+  'kanel': 'cinnamon',
+  'vaniljsås': 'vanilla sauce',
+  'vanilj': 'vanilla',
+  'kardemumma': 'cardamom',
+  'kryddor': 'spices',
+
+  // Common recipe ingredients
+  'tomatpuré': 'tomato paste',
+  'kokosmjölk': 'coconut milk',
+  'citron': 'lemon',
+  'lime': 'lime',
+  'ingefära': 'ginger',
+  'chili': 'chili',
+  'paprikapulver': 'paprika powder',
+  'currypulver': 'curry powder',
+  'honung': 'honey',
+  'sirap': 'syrup',
+  'jäst': 'yeast'
 };
 
 // Search for food items in Livsmedelsverket database
