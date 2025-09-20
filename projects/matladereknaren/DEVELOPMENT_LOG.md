@@ -328,6 +328,274 @@ Consider switching to USDA-only approach with expanded translations instead of d
 - Better international ingredient coverage
 - No dependency on Livsmedelsverket availability
 
+---
+
+## Session 7: Personalized Nutrition Planning System (September 20, 2025)
+
+### 🎯 Session Overview
+This was a comprehensive session focused on implementing a complete personalized nutrition planning system with calorie goal calculation and goal-based recipes, transforming Matplan from a simple meal prep calculator into a sophisticated nutrition planning platform.
+
+### 🔧 Major Features Implemented
+
+#### 1. Custom Swedish Nutrition Database Expansion
+**Initial Request**: Add different types of protein powder to the nutrition database
+**Implementation**:
+- Expanded `src/data/swedishNutrition.json` from 85 to 107 ingredients (+22 items)
+- **Protein Powders Added**: whey protein, isolat protein, kasein protein, ärtprotein, sojaprotein, växtprotein (6 varieties)
+- **Dairy Products Added**: kvarg, vaniljkvarg, keso, filmjölk, crème fraiche, feta (6 varieties)
+- **Other Additions**: mandel, cashewnötter, dadlar, russin, mandelmjöl, kokosmjöl, etc.
+- All values calculated per 100g for consistency with existing database
+- Added source attribution for nutritional accuracy
+
+#### 2. Complete Calorie Goal Calculator System
+**Purpose**: Allow users to calculate personalized calorie targets based on individual metrics and goals
+**Implementation**: Created `src/components/CalorieCalculator.jsx` (360+ lines)
+
+**Features**:
+- **Personal Metrics Input**: Weight, height, age, gender, activity level, goal
+- **BMR Calculation**: Using Mifflin-St Jeor equation (most accurate formula)
+- **TDEE Calculation**: 5 activity levels from sedentary to very active
+- **Goal-Based Adjustments**: Maintenance, deficit (-500 kcal), surplus (+500 kcal)
+- **Weekly Targets**: Focus on weekly goals instead of daily for flexibility
+- **Macro Breakdown**: Protein, carbs, fat distribution based on goals
+- **Swedish Localization**: All text, units, and descriptions in Swedish
+
+**Technical Implementation**:
+```javascript
+// BMR using Mifflin-St Jeor equation
+export function calculateBMR(weight, height, age, gender) {
+  if (gender === 'male') {
+    return (10 * weight) + (6.25 * height) - (5 * age) + 5
+  } else {
+    return (10 * weight) + (6.25 * height) - (5 * age) - 161
+  }
+}
+```
+
+#### 3. Goal-Based Recipe Categories & Recipes
+**New Categories**:
+- **Kaloriunderskott** (Caloric Deficit) - for weight loss
+- **Kaloriöverskott** (Caloric Surplus) - for muscle gain/weight gain
+
+**Recipe Development**: Created `src/data/goalBasedMealPlans.js`
+- **4 specialized recipes** designed for specific caloric targets
+- **5-day meal prep focus** (5 servings per recipe)
+- **Deficit recipes**: ~500 kcal per portion (high protein, low calorie)
+- **Surplus recipes**: ~700 kcal per portion (healthy fats, calorie-dense)
+
+**Example Recipes**:
+- **Deficit**: "Kryddig kycklingfilé med rostade grönsaker" (600g chicken, vegetables, quinoa)
+- **Surplus**: "Teriyakilax med avokado och sötstark potatis" (salmon, avocado, nuts)
+
+#### 4. Integrated Routing & Navigation System
+**Challenge**: User requested "real routing" like existing categories instead of internal React navigation
+**Solution**: Integrated goal-based categories into existing static page generation system
+
+**Implementation**:
+- Updated `scripts/generateCategoryPages.js` to include goal-based categories
+- Generated static HTML pages: `/inspiration/kaloriunderskott/` and `/inspiration/kalorioverskott/`
+- Added proper color schemes and SEO optimization for new categories
+- Integrated into existing recipe browsing flow
+
+#### 5. Complete User Flow Integration
+**Seamless Journey**: Calculator → Goal Selection → Targeted Recipes → Import to Calculator
+
+**Navigation Flow**:
+1. User calculates personal calorie goals
+2. Based on goal (deficit/surplus/maintenance):
+   - **Deficit/Surplus**: Navigate to specific goal-based recipes
+   - **Maintenance**: Browse all available recipes
+3. Users can import recipes directly into meal prep calculator
+4. Complete nutrition and cost analysis
+
+### 🐛 Bug Fixes Implemented
+
+#### Navigation Bug Fix
+**Issue**: "💡 Bläddra bland alla recept" button incorrectly navigated to React component instead of static inspiration page
+**Solution**:
+```jsx
+// Before (incorrect)
+onClick={() => onNavigateToGoalRecipes('all')}
+
+// After (correct)
+href="inspiration/"
+```
+
+#### Static Page Enhancement - Icons Added
+**Issue**: Static inspiration page lacked visual appeal compared to internal React component
+**Solution**: Added category icons to all recipe categories
+- Updated category definitions with icons: 💰, 💪, 👨‍👩‍👧‍👦, 🥑, 🌱, ⚡, 🎯
+- Enhanced CSS styling with centered icon display
+- Regenerated all static pages with improved visual design
+
+### 📁 Files Created/Modified
+
+#### New Files:
+1. **`src/utils/calorieCalculations.js`** - BMR/TDEE calculation functions
+2. **`src/components/CalorieCalculator.jsx`** - Complete calorie calculator interface
+3. **`src/data/goalBasedMealPlans.js`** - Goal-specific recipes
+
+#### Modified Files:
+1. **`src/data/swedishNutrition.json`** - Expanded with 22 new ingredients
+2. **`src/data/mealPlans.js`** - Added goal-based categories integration
+3. **`src/App.jsx`** - Integrated calorie calculator page routing
+4. **`scripts/generateCategoryPages.js`** - Added icons and goal-based categories
+
+### 🎨 Technical Architecture Enhancements
+
+#### Nutrition Data Management
+- **Three-tier system**: Swedish DB → USDA API → Fallback
+- **Custom database priority**: Common Swedish ingredients handled locally
+- **API efficiency**: Reduced external calls for frequent ingredients
+
+#### State Management
+- **Calculator state**: Personal metrics, results, navigation
+- **Recipe import**: Automatic ingredient loading from goal-based recipes
+- **Meal count syncing**: Recipe servings automatically set meal count
+
+#### SEO & Performance
+- **Static generation**: All goal-based categories have SEO-optimized pages
+- **Structured data**: JSON-LD schema for recipe pages
+- **Performance**: Icons and styling optimized for fast loading
+
+### 📊 Current System Capabilities
+
+#### Recipe Categories (Complete):
+- **Budget** (6 recipes) - 💰
+- **Fitness** (5 recipes) - 💪
+- **Family** (4 recipes) - 👨‍👩‍👧‍👦
+- **LCHF** (4 recipes) - 🥑
+- **Vegetarian** (4 recipes) - 🌱
+- **Quick** (4 recipes) - ⚡
+- **Kaloriunderskott** (2 recipes) - 🎯
+- **Kaloriöverskott** (2 recipes) - 💪
+- **Total**: 31 recipes
+
+#### Nutrition Database:
+- **Swedish ingredients**: 107 items (custom database)
+- **International coverage**: 350,000+ items (USDA API)
+- **Protein sources**: Complete coverage including all protein powder varieties
+
+### 🚀 Git Commits Made This Session
+1. `767aa85` - "Implement custom Swedish nutrition database with 85 ingredients"
+2. `3b7f577` - "Document custom Swedish nutrition database implementation"
+3. `2cb8992` - "Document custom Swedish nutrition database implementation"
+4. `f2d741b` - "Implement complete personalized nutrition planning system"
+5. `006926f` - "Fix navigation to static inspiration page and add category icons"
+
+### ✅ Session Accomplishments Summary
+- ✅ Expanded nutrition database with protein powders and dairy products
+- ✅ Built complete calorie goal calculator with BMR/TDEE calculations
+- ✅ Created goal-based recipe categories with specialized recipes
+- ✅ Implemented seamless user flow from calculation to recipe selection
+- ✅ Fixed navigation bugs and enhanced static page design with icons
+- ✅ Integrated goal-based categories into existing routing system
+- ✅ Added proper SEO optimization for all new pages
+
+### 🔮 Future Development Ideas & Next Session Potential
+
+#### Critical Quality Assurance Tasks:
+1. **Recipe Validation & Nutritional Accuracy Review**:
+   - Go through all existing recipes to verify nutritional values match reality
+   - Cross-check calorie calculations with actual ingredient nutritional data
+   - Ensure goal-based recipes actually hit their target calorie ranges (deficit ~500 kcal, surplus ~700 kcal)
+   - Validate portion sizes are realistic and practical for meal prep
+
+2. **Weekly Meal Planning Optimization**:
+   - Adapt recipes specifically for **5 lunches + 5 dinners** weekly meal prep format
+   - Restructure recipes to better serve this common meal prep pattern
+   - Consider creating "lunch version" and "dinner version" of popular recipes
+   - Optimize ingredient quantities for exactly 10 portions (5+5) rather than current varied serving sizes
+
+#### Outstanding Technical Issues:
+
+3. **Missing Static Page for Kaloriräknare**:
+   - Calorie calculator is only accessible through React app internal routing
+   - No direct URL like `/kaloriräknare/` or `/calorie-calculator/`
+   - Should have static page generation for SEO and direct access
+   - Currently only accessible via button in main app
+
+4. **USDA API Environment Variable (From Session 6)**:
+   - ⏳ USDA API key still needs to be set in Netlify dashboard
+   - Currently using DEMO_KEY with very limited requests
+   - Requires production testing after environment variable deployment
+
+5. **Inconsistent Recipe Serving Sizes**:
+   - Current recipes have random serving counts (4, 5, 6, 7 portions)
+   - Should standardize to 10 portions for practical weekly meal prep
+   - All ingredient quantities need recalculation for consistency
+
+6. **Limited Goal-Based Recipe Variety**:
+   - Only 2 recipes each for kaloriunderskott and kaloriöverskott
+   - Users need more variety for weekly meal planning
+   - Should expand to at least 4-6 recipes per goal category
+
+#### User Experience Improvements Needed:
+
+7. **Recipe Import UX Issues**:
+   - URL parameter import system may not be intuitive for users
+   - Could benefit from clearer visual feedback during import process
+   - Need better instructions or guided workflow
+
+8. **Mobile UX Optimization**:
+   - Calculator interface needs mobile responsiveness review
+   - Recipe cards could be better optimized for touch interaction
+   - Navigation system needs mobile-first improvements
+
+9. **User Guidance & Onboarding**:
+   - No help system or onboarding for new users
+   - Complex nutrition calculations need better explanations
+   - Users might not understand the meal prep workflow
+   - Missing tooltips or help text for advanced features
+
+#### Technical Debt & Performance:
+
+10. **Performance Optimization**:
+   - No lazy loading implemented for recipe components
+   - API calls should be cached to reduce network requests
+   - Static page generation could be optimized for faster builds
+
+11. **SEO & Discoverability**:
+    - Missing meta descriptions for some category pages
+    - Could benefit from enhanced structured data (JSON-LD)
+    - Internal linking between related recipes needs improvement
+    - Breadcrumb navigation could be enhanced
+
+12. **Code Quality & Maintainability**:
+    - Some components could be refactored for better reusability
+    - Error handling could be more robust throughout the app
+    - Unit tests are missing for calculation functions
+    - TypeScript could be considered for better type safety
+
+#### High-Priority Enhancements:
+1. **Recipe Expansion**: Add more goal-based recipes (currently only 2 per category)
+2. **Advanced Macro Tracking**: More detailed macro recommendations based on training goals
+3. **Meal Timing**: Add meal timing suggestions for optimal nutrition distribution
+4. **Shopping List Export**: PDF/print functionality for grocery shopping
+5. **Progress Tracking**: Allow users to save and track their nutrition goals over time
+
+#### Technical Improvements:
+1. **Performance Optimization**: Lazy loading for recipe images and components
+2. **PWA Features**: Offline functionality for recipe access
+3. **API Caching**: Reduce API calls with intelligent caching system
+4. **Database Expansion**: Add more Swedish-specific ingredients to custom database
+
+#### Platform Evolution:
+1. **Standalone Domain**: Transform into independent nutrition platform
+2. **User Accounts**: Save personal goals and favorite recipes
+3. **Community Features**: Recipe sharing and rating system
+4. **Mobile App**: Native mobile application for better UX
+
+### 📈 Current State Summary
+The Matplan application has evolved from a simple meal prep calculator into a comprehensive nutrition planning platform. Users can now:
+1. Calculate personalized calorie goals based on individual metrics
+2. Browse goal-specific recipes tailored to their nutrition objectives
+3. Import complete meal plans directly into the calculator
+4. Get detailed cost and nutrition analysis for weekly meal preparation
+5. Navigate seamlessly between calculation, planning, and recipe selection
+
+The system now provides a complete end-to-end nutrition planning experience with professional-grade calculations, extensive recipe database, and intuitive user interface - all while maintaining the original simplicity and focus on Swedish users.
+
 **Implementation Path**:
 1. Expand Swedish→English translation dictionary significantly (200+ ingredients)
 2. Add intelligent Swedish ingredient detection and translation

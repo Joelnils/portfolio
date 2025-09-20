@@ -154,10 +154,11 @@ function App() {
     }
   }, [])
 
-  // Handle URL import parameter
+  // Handle URL parameters
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search)
     const importSlug = urlParams.get('import')
+    const calculatorParam = urlParams.get('calculator')
 
     if (importSlug) {
       // Import the recipe from URL parameter
@@ -171,6 +172,15 @@ function App() {
         const newUrl = window.location.pathname
         window.history.replaceState({}, document.title, newUrl)
       }
+    }
+
+    if (calculatorParam === 'true') {
+      // Open calorie calculator from URL parameter
+      setCurrentPage('calorie-calculator')
+
+      // Clean up URL
+      const newUrl = window.location.pathname
+      window.history.replaceState({}, document.title, newUrl)
     }
   }, [importMealPlan])
 

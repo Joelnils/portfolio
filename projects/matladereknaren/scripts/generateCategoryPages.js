@@ -870,4 +870,246 @@ categories.forEach(category => {
   console.log(`Generated: /inspiration/${category.slug}/`)
 })
 
+// Generate calorie calculator static page
+function generateCalorieCalculatorPage() {
+  return `<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kaloriräknare - Matplan</title>
+    <meta name="description" content="Beräkna dina personliga kaloriemål baserat på din kropp och dina mål. BMR, TDEE och veckomål för effektiv meal prep-planering.">
+    <meta name="keywords" content="kaloriräknare, BMR, TDEE, kaloriemål, näringsberäkning, meal prep, svenska">
+    <link rel="canonical" href="https://joelfredriksson.com/projects/matladereknaren/kalorirakn are/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://joelfredriksson.com/projects/matladereknaren/kalorirakn are/">
+    <meta property="og:title" content="Kaloriräknare - Matplan">
+    <meta property="og:description" content="Beräkna dina personliga kaloriemål baserat på din kropp och dina mål. BMR, TDEE och veckomål för meal prep.">
+    <meta property="og:image" content="https://joelfredriksson.com/og-image.svg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://joelfredriksson.com/projects/matladereknaren/kalorirakn are/">
+    <meta property="twitter:title" content="Kaloriräknare - Matplan">
+    <meta property="twitter:description" content="Beräkna dina personliga kaloriemål baserat på din kropp och dina mål.">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MX68NQ0BPF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-MX68NQ0BPF');
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+      body {
+        font-family: Inter, system-ui, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+        min-height: 100vh;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+      .title {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin: 0 0 1rem 0;
+      }
+      .subtitle {
+        font-size: 1.2rem;
+        color: #6b7280;
+        margin-bottom: 2rem;
+      }
+      .calculator-card {
+        background: white;
+        border-radius: 16px;
+        padding: 3rem;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        border: 2px solid #e5e7eb;
+        text-align: center;
+      }
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin: 3rem 0;
+      }
+      .feature {
+        text-align: center;
+        padding: 1.5rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 4px rgb(0 0 0 / 0.05);
+      }
+      .feature-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+      .cta-button {
+        display: inline-block;
+        background: #10b981;
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin: 2rem 0;
+        transition: all 0.3s;
+      }
+      .cta-button:hover {
+        background: #059669;
+        transform: translateY(-2px);
+      }
+      .back-link {
+        display: inline-block;
+        color: #10b981;
+        text-decoration: none;
+        font-weight: 500;
+        margin-bottom: 2rem;
+      }
+      .back-link:hover {
+        color: #059669;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <a href="../" class="back-link">← Tillbaka till kalkylatorn</a>
+
+      <div class="header">
+        <h1 class="title">🎯 Kaloriräknare</h1>
+        <p class="subtitle">Beräkna dina personliga kaloriemål baserat på din kropp och dina mål</p>
+      </div>
+
+      <div class="calculator-card">
+        <h2 style="color: #1f2937; margin-bottom: 1.5rem;">Professionell näringsberäkning</h2>
+        <p style="color: #6b7280; margin-bottom: 2rem;">
+          Använd vår avancerade kaloriräknare för att få personliga rekommendationer
+          baserat på din ålder, vikt, längd, aktivitetsnivå och mål.
+        </p>
+
+        <a href="../?calculator=true" class="cta-button">
+          🧮 Öppna kaloriräknaren
+        </a>
+
+        <p style="color: #9ca3af; font-size: 0.9rem; margin-top: 1rem;">
+          Resultatet visar veckomål för flexibel meal prep-planering
+        </p>
+      </div>
+
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">⚖️</div>
+          <h3 style="color: #1f2937; margin-bottom: 1rem;">BMR Beräkning</h3>
+          <p style="color: #6b7280; font-size: 0.9rem;">
+            Basalomsättning enligt Mifflin-St Jeor ekvationen för exakta resultat
+          </p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">🏃‍♂️</div>
+          <h3 style="color: #1f2937; margin-bottom: 1rem;">Aktivitetsnivå</h3>
+          <p style="color: #6b7280; font-size: 0.9rem;">
+            5 olika aktivitetsnivåer från stillasittande till mycket aktiv
+          </p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">🎯</div>
+          <h3 style="color: #1f2937; margin-bottom: 1rem;">Personliga Mål</h3>
+          <p style="color: #6b7280; font-size: 0.9rem;">
+            Kaloriunderskott, överskott eller vikthållning med makronäringsfördelning
+          </p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">📊</div>
+          <h3 style="color: #1f2937; margin-bottom: 1rem;">Veckomål</h3>
+          <p style="color: #6b7280; font-size: 0.9rem;">
+            Flexibla veckomål istället för dagliga för enklare meal prep-planering
+          </p>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer style="background: white; border-top: 1px solid #e5e7eb; margin-top: 4rem; border-radius: 16px;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+            <!-- Brand Section -->
+            <div>
+              <h3 style="color: #1f2937; font-size: 1.125rem; font-weight: 600; margin: 0 0 1rem 0;">Matplan</h3>
+              <p style="color: #6b7280; font-size: 0.875rem; line-height: 1.5; margin: 0;">
+                Beräkna näringsvärden för hela veckohandlingen och se hur många matlådor det blir.
+                Enkelt, gratis och utan registrering.
+              </p>
+            </div>
+
+            <!-- Links Section -->
+            <div>
+              <h4 style="color: #1f2937; font-size: 1rem; font-weight: 500; margin: 0 0 1rem 0;">Utforska</h4>
+              <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <a href="../" style="color: #6b7280; text-decoration: none; font-size: 0.875rem; transition: color 0.2s;">Kalkylator</a>
+                <a href="../inspiration/" style="color: #6b7280; text-decoration: none; font-size: 0.875rem; transition: color 0.2s;">Receptinspiration</a>
+                <a href="../inspiration/budget/" style="color: #6b7280; text-decoration: none; font-size: 0.875rem; transition: color 0.2s;">Budgetrecept</a>
+                <a href="../inspiration/fitness/" style="color: #6b7280; text-decoration: none; font-size: 0.875rem; transition: color 0.2s;">Fitnessrecept</a>
+              </div>
+            </div>
+
+            <!-- Contact/Info Section -->
+            <div>
+              <h4 style="color: #1f2937; font-size: 1rem; font-weight: 500; margin: 0 0 1rem 0;">Om projektet</h4>
+              <p style="color: #6b7280; font-size: 0.875rem; line-height: 1.5; margin: 0 0 0.75rem 0;">
+                Skapat för att förenkla meal prep och veckoplanering av mat.
+              </p>
+              <a href="https://joelfredriksson.com" style="color: #10b981; text-decoration: none; font-size: 0.875rem; transition: color 0.2s;" target="_blank" rel="noopener noreferrer">
+                Av Joel Fredriksson →
+              </a>
+            </div>
+          </div>
+
+          <!-- Bottom Section -->
+          <div style="border-top: 1px solid #e5e7eb; padding-top: 1.5rem; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+            <p style="color: #9ca3af; font-size: 0.875rem; margin: 0;">
+              © 2025 Matplan. Alla rättigheter förbehållna.
+            </p>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+              <span style="color: #9ca3af; font-size: 0.875rem;">Gjord med</span>
+              <span style="color: #ef4444;">❤️</span>
+              <span style="color: #9ca3af; font-size: 0.875rem;">i Sverige</span>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>`
+}
+
+// Generate calorie calculator page
+const calculatorDir = join(dirname(distDir), 'kalorirakn are')
+mkdirSync(calculatorDir, { recursive: true })
+const calculatorPageContent = generateCalorieCalculatorPage()
+writeFileSync(join(calculatorDir, 'index.html'), calculatorPageContent)
+console.log('Generated: /kalorirakn are/')
+
 console.log('✅ All category pages generated successfully!')
