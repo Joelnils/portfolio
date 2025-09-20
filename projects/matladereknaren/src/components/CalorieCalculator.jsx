@@ -10,7 +10,7 @@ import {
   goalTypes
 } from '../utils/calorieCalculations'
 
-export default function CalorieCalculator({ onBackToCalculator }) {
+export default function CalorieCalculator({ onBackToCalculator, onNavigateToGoalRecipes }) {
   const [formData, setFormData] = useState({
     weight: '',
     height: '',
@@ -175,12 +175,25 @@ export default function CalorieCalculator({ onBackToCalculator }) {
             >
               🔄 Räkna om
             </button>
-            <button
-              onClick={() => onBackToCalculator()}
-              className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
-            >
-              🍱 Se recept för ditt mål
-            </button>
+            {(formData.goal === 'deficit' || formData.goal === 'surplus') && (
+              <button
+                onClick={() => {
+                  const goalKey = formData.goal === 'deficit' ? 'kaloriunderskott' : 'kaloriöverskott'
+                  onNavigateToGoalRecipes(goalKey)
+                }}
+                className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
+              >
+                🍱 Se recept för ditt mål
+              </button>
+            )}
+            {formData.goal === 'maintenance' && (
+              <button
+                onClick={() => onBackToCalculator()}
+                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+              >
+                💡 Bläddra bland alla recept
+              </button>
+            )}
           </div>
 
           {/* Detailed Breakdown */}
