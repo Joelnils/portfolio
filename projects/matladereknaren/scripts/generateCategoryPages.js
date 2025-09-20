@@ -786,7 +786,7 @@ const overviewPage = `<!doctype html>
   </head>
   <body>
     <div class="container">
-      <a href="../" class="back-link">← Tillbaka till kalkylatorn</a>
+      <a href="/projects/matladereknaren/" class="back-link">← Tillbaka till kalkylatorn</a>
 
       <div class="header">
         <h1 class="title">💡 Receptinspiration</h1>
@@ -994,7 +994,7 @@ function generateCalorieCalculatorPage() {
   </head>
   <body>
     <div class="container">
-      <a href="../" class="back-link">← Tillbaka till kalkylatorn</a>
+      <a href="/projects/matladereknaren/" class="back-link">← Tillbaka till kalkylatorn</a>
 
       <div class="header">
         <h1 class="title">🎯 Kaloriräknare</h1>
