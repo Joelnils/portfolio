@@ -188,7 +188,7 @@ export default function CalorieCalculator({ onBackToCalculator, onNavigateToGoal
             )}
             {formData.goal === 'maintenance' && (
               <button
-                onClick={() => onBackToCalculator()}
+                onClick={() => onNavigateToGoalRecipes('all')}
                 className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
               >
                 💡 Bläddra bland alla recept
