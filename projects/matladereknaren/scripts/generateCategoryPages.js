@@ -36,12 +36,13 @@ function getRecipesByCategory(categoryId) {
   return allRecipes.filter(recipe => recipe.category === categoryId)
 }
 
-// Category definitions with SEO data
+// Category definitions with SEO data and icons
 const categories = [
   {
     id: 'budget',
     name: 'Budgetrecept',
     description: 'Näringsrik mat utan att spendera för mycket',
+    icon: '💰',
     slug: 'budget',
     seoTitle: 'Budgetrecept - Matplan Näringsberäkning',
     seoDescription: 'Billiga och näringsrika recept för den som vill äta bra utan att spendera för mycket. Importera ingredienser direkt.'
@@ -50,6 +51,7 @@ const categories = [
     id: 'fitness',
     name: 'Fitness & Protein',
     description: 'För dig som tränar och vill maximera protein',
+    icon: '💪',
     slug: 'fitness',
     seoTitle: 'Proteinrika Recept för Träning - Matplan',
     seoDescription: 'Proteinrika recept perfekta för träning och muskelbygge. Omega-3, quinoa och magert kött med näringsberäkning.'
@@ -58,6 +60,7 @@ const categories = [
     id: 'family',
     name: 'Familjerecept',
     description: 'Barnvänliga rätter hela familjen gillar',
+    icon: '👨‍👩‍👧‍👦',
     slug: 'familj',
     seoTitle: 'Barnvänliga Familjerecept - Matplan',
     seoDescription: 'Enkla recept som hela familjen gillar. Klassiska rätter barn älskar med näringsberäkning och kostnader.'
@@ -66,6 +69,7 @@ const categories = [
     id: 'lchf',
     name: 'LCHF & Keto',
     description: 'Låg kolhydrat, hög fett',
+    icon: '🥑',
     slug: 'lchf',
     seoTitle: 'LCHF & Keto Recept - Matplan Kalkylator',
     seoDescription: 'Låg kolhydrat recept för LCHF och keto-dieter. Beräkna näringsvärden och kostnader för ketogena måltider.'
@@ -74,6 +78,7 @@ const categories = [
     id: 'vegetarian',
     name: 'Vegetariska Recept',
     description: 'Växtbaserad näring',
+    icon: '🌱',
     slug: 'vegetariskt',
     seoTitle: 'Vegetariska Recept - Matplan Näringsberäkning',
     seoDescription: 'Vegetariska och veganska recept med hög proteinandel. Linser, quinoa och växtbaserad näring med kalkylator.'
@@ -82,6 +87,7 @@ const categories = [
     id: 'quick',
     name: 'Snabba Måltider',
     description: 'Under 20 minuter',
+    icon: '⚡',
     slug: 'snabbt',
     seoTitle: 'Snabba Recept Under 20 Min - Matplan',
     seoDescription: 'Snabba och enkla recept som tillagas på under 20 minuter. Perfekt för vardagen med näringsberäkning.'
@@ -90,6 +96,7 @@ const categories = [
     id: 'kaloriunderskott',
     name: 'Kaloriunderskott',
     description: 'För viktminskning - högprotein, lågkalorit',
+    icon: '🎯',
     slug: 'kaloriunderskott',
     seoTitle: 'Kaloriunderskott Recept - Matplan Viktminskning',
     seoDescription: 'Måltider optimerade för viktminskning med hög protein och låg kalori. 5-dagars meal prep för kaloriunderskott.'
@@ -98,6 +105,7 @@ const categories = [
     id: 'kaloriöverskott',
     name: 'Kaloriöverskott',
     description: 'För viktuppgång - näringsrikt, kaloritätt',
+    icon: '💪',
     slug: 'kalorioverskott',
     seoTitle: 'Kaloriöverskott Recept - Matplan Muskelbygge',
     seoDescription: 'Näringsrika måltider för viktuppgång och muskelbygge. Hälsosamma fetter och kvalitetsprotein för kaloriöverskott.'
@@ -727,11 +735,17 @@ const overviewPage = `<!doctype html>
         box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
         transition: all 0.3s;
         border: 2px solid transparent;
+        text-align: center;
       }
       .category-card:hover {
         transform: translateY(-4px);
         box-shadow: 0 12px 24px -4px rgb(0 0 0 / 0.1);
         border-color: #10b981;
+      }
+      .category-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        display: block;
       }
       .category-card h2 {
         margin: 0 0 1rem 0;
@@ -782,6 +796,7 @@ const overviewPage = `<!doctype html>
       <div class="categories">
         ${categories.map(cat => `
           <div class="category-card">
+            <div class="category-icon">${cat.icon}</div>
             <h2><a href="${cat.slug}/">${cat.name}</a></h2>
             <p>${cat.description}</p>
             <span class="recipe-count">${getRecipesByCategory(cat.id).length} recept</span>

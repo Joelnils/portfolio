@@ -187,12 +187,12 @@ export default function CalorieCalculator({ onBackToCalculator, onNavigateToGoal
               </button>
             )}
             {formData.goal === 'maintenance' && (
-              <button
-                onClick={() => onNavigateToGoalRecipes('all')}
-                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+              <a
+                href="inspiration/"
+                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium inline-block text-center"
               >
                 💡 Bläddra bland alla recept
-              </button>
+              </a>
             )}
           </div>
 
