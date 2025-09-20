@@ -8,7 +8,6 @@ import LiveSummaryBar from './components/LiveSummaryBar'
 import BackLink from './components/BackLink'
 import InspirationPage from './components/InspirationPage'
 import CalorieCalculator from './components/CalorieCalculator'
-import GoalBasedRecipes from './components/GoalBasedRecipes'
 import Footer from './components/Footer'
 import { parseIngredient, lookupNutrition, calculateNutrition } from './utils/nutrition'
 import { getAllRecipes } from './data/mealPlans'
@@ -16,7 +15,6 @@ import { getAllRecipes } from './data/mealPlans'
 function App() {
   const [currentPage, setCurrentPage] = useState('calculator')
   const [currentCategory, setCurrentCategory] = useState('all')
-  const [currentGoal, setCurrentGoal] = useState('kaloriunderskott')
   const [ingredients, setIngredients] = useState([])
   const [nutritionData, setNutritionData] = useState({})
   const [mealCount, setMealCount] = useState(7)
@@ -182,10 +180,10 @@ function App() {
     setCurrentPage('inspiration')
   }
 
-  // Navigate to goal-based recipes
+  // Navigate to goal-based recipes (now uses inspiration page)
   const navigateToGoalRecipes = (goal) => {
-    setCurrentGoal(goal)
-    setCurrentPage('goal-recipes')
+    setCurrentCategory(goal)
+    setCurrentPage('inspiration')
   }
 
   // Show inspiration page
@@ -218,20 +216,6 @@ function App() {
     )
   }
 
-  // Show goal-based recipes page
-  if (currentPage === 'goal-recipes') {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <BackLink />
-        <GoalBasedRecipes
-          goal={currentGoal}
-          onImportMealPlan={importMealPlan}
-          onBackToCalculator={() => setCurrentPage('calculator')}
-        />
-        <Footer />
-      </div>
-    )
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">

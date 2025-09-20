@@ -1,4 +1,5 @@
 // Individual recipe cards - each focused on one dish with realistic portions
+import { getAllGoalBasedRecipes } from './goalBasedMealPlans.js'
 export const mealPlans = [
   // Budget-friendly recipes
   {
@@ -693,18 +694,36 @@ export const categories = [
     slug: 'snabbt',
     seoTitle: 'Snabba Recept Under 20 Min - Matplan',
     seoDescription: 'Snabba och enkla recept som tillagas på under 20 minuter. Perfekt för vardagen med näringsberäkning.'
+  },
+  {
+    id: 'kaloriunderskott',
+    name: 'Kaloriunderskott',
+    description: 'För viktminskning - högprotein, lågkalorit',
+    slug: 'kaloriunderskott',
+    seoTitle: 'Kaloriunderskott Recept - Matplan Viktminskning',
+    seoDescription: 'Måltider optimerade för viktminskning med hög protein och låg kalori. 5-dagars meal prep för kaloriunderskott.'
+  },
+  {
+    id: 'kaloriöverskott',
+    name: 'Kaloriöverskott',
+    description: 'För viktuppgång - näringsrikt, kaloritätt',
+    slug: 'kalorioverskott',
+    seoTitle: 'Kaloriöverskott Recept - Matplan Muskelbygge',
+    seoDescription: 'Näringsrika måltider för viktuppgång och muskelbygge. Hälsosamma fetter och kvalitetsprotein för kaloriöverskott.'
   }
 ]
 
 export const getMealPlanById = (id) => {
-  return mealPlans.find(plan => plan.id === id)
+  const allRecipes = getAllRecipes()
+  return allRecipes.find(plan => plan.id === id)
 }
 
 export const getMealPlansByCategory = (categoryId) => {
+  const allRecipes = getAllRecipes()
   if (categoryId === 'all' || !categoryId) {
-    return mealPlans
+    return allRecipes
   }
-  return mealPlans.filter(plan => plan.category === categoryId)
+  return allRecipes.filter(plan => plan.category === categoryId)
 }
 
 export const getCategoryById = (id) => {
@@ -712,5 +731,5 @@ export const getCategoryById = (id) => {
 }
 
 export const getAllRecipes = () => {
-  return mealPlans
+  return [...mealPlans, ...getAllGoalBasedRecipes()]
 }
