@@ -7,6 +7,7 @@ import NutritionSummary from './components/NutritionSummary'
 import LiveSummaryBar from './components/LiveSummaryBar'
 import BackLink from './components/BackLink'
 import InspirationPage from './components/InspirationPage'
+import CalorieCalculator from './components/CalorieCalculator'
 import Footer from './components/Footer'
 import { parseIngredient, lookupNutrition, calculateNutrition } from './utils/nutrition'
 import { getAllRecipes } from './data/mealPlans'
@@ -195,10 +196,25 @@ function App() {
     )
   }
 
+  // Show calorie calculator page
+  if (currentPage === 'calorie-calculator') {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <BackLink />
+        <CalorieCalculator
+          onBackToCalculator={() => setCurrentPage('calculator')}
+        />
+        <Footer />
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <BackLink />
-      <Header />
+      <Header
+        onNavigateToCalorieCalculator={() => setCurrentPage('calorie-calculator')}
+      />
       <LiveSummaryBar
         totals={totals}
         totalPrice={totalPrice}

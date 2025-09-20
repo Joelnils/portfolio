@@ -558,4 +558,140 @@ Consider switching to USDA-only approach with expanded translations instead of d
 
 ---
 
+## Session 7: Calorie Goal Calculator & Personalized Meal Planning (September 20, 2025)
+
+### 🎯 Session Goals
+- Implement comprehensive calorie goal calculator with BMR calculations
+- Create goal-based recipe categories for caloric deficit and surplus
+- Develop specialized weekly shopping meal plans based on user goals
+- Transform app from simple calculator to personalized nutrition planner
+
+### 🔧 Major Implementation Plan: Personalized Nutrition System
+
+**Problem Identified**: Current app calculates nutrition but doesn't provide personalized guidance
+- Users don't know their calorie targets for their goals
+- Recipe categories aren't aligned with individual needs
+- Missing connection between calculations and actionable meal planning
+
+**Solution Plan**: Multi-phase personalized nutrition platform
+
+### 📊 Phase 1: Calorie Goal Calculator Implementation
+
+**New Component**: `CalorieCalculator.jsx`
+- **Route**: `/kalorirakare` or `/kalorimaal`
+- **Swedish Interface**: Fully localized for Swedish users
+- **Inputs**:
+  - Vikt (Weight) in kg
+  - Längd (Height) in cm
+  - Aktivitetsnivå (Activity level) - dropdown with Swedish options
+  - Mål (Goal) - Kaloriunderskott/Kaloriöverskott/Underhåll
+- **Calculations**:
+  - BMR using Mifflin-St Jeor equation (most accurate)
+  - TDEE (Total Daily Energy Expenditure) = BMR × activity factor
+  - Weekly targets (not daily) for flexible meal prep approach
+- **Output**:
+  - Weekly calorie target with explanation
+  - Protein/carb/fat macro suggestions
+  - Link to goal-specific recipe categories
+
+### 🍽️ Phase 2: Goal-Based Recipe Categories
+
+**New Categories**:
+1. **"Kaloriunderskott"** - Caloric deficit meal plans
+   - Focus: High protein, lower calorie, filling meals
+   - Target: 300-500 kcal deficit recipes
+   - Emphasis: Lean proteins, vegetables, whole grains
+
+2. **"Kaloriöverskott"** - Caloric surplus meal plans
+   - Focus: Nutrient-dense, higher calorie meals
+   - Target: Healthy fats, complex carbs, quality proteins
+   - Emphasis: Nuts, healthy oils, calorie-dense whole foods
+
+**Integration Strategy**:
+- Calculator results link directly to appropriate category
+- "Se recept för ditt mål" button after calculation
+- Filter existing recipes by calorie density and macros
+- Create new specialized recipes for each goal
+
+### 🛒 Phase 3: Specialized Weekly Shopping Meal Plans
+
+**Concept**: Complete weekly meal prep solutions based on calculated goals
+
+**Kaloriunderskott Veckomeny**:
+- 5-7 complete meal recipes optimized for deficit
+- Shopping list automatically generated
+- Prep instructions for batch cooking
+- Portion control guidance
+- Target: ~1200-1600 kcal total daily intake
+
+**Kaloriöverskott Veckomeny**:
+- 5-7 nutrient-dense, higher calorie recipes
+- Focus on healthy weight gain
+- Post-workout meal timing suggestions
+- Target: ~2500-3000+ kcal total daily intake
+
+**Features**:
+- One-click import of entire week's shopping list
+- Meal prep timeline and instructions
+- Macro breakdown for each day
+- Substitution suggestions for dietary preferences
+
+### 🔄 Technical Architecture Updates
+
+**New File Structure**:
+```
+src/
+├── components/
+│   ├── CalorieCalculator.jsx (new)
+│   ├── GoalBasedRecipes.jsx (new)
+│   └── WeeklyMealPlan.jsx (new)
+├── data/
+│   ├── goalBasedMealPlans.js (new)
+│   └── activityLevels.js (new)
+└── utils/
+    └── calorieCalculations.js (new)
+```
+
+**Enhanced Navigation**:
+- Add "Kaloriräknare" to main navigation
+- Goal-based category links in inspiration section
+- Seamless flow: Calculator → Goals → Recipes → Shopping
+
+### 💡 User Experience Flow
+
+1. **Discovery**: User finds calorie calculator
+2. **Input**: Enters personal metrics and goals
+3. **Results**: Sees personalized weekly calorie targets
+4. **Action**: Clicks "Se recept för ditt mål"
+5. **Planning**: Browses goal-specific recipes
+6. **Shopping**: Imports complete weekly meal plan
+7. **Execution**: Uses nutrition calculator for precise tracking
+
+### 📈 Expected Impact
+
+**User Value**:
+- Personalized nutrition guidance vs generic calculator
+- Clear path from goals to actionable meal plans
+- Reduces decision fatigue with curated recipes
+- Complete meal prep solution in one app
+
+**Platform Positioning**:
+- Transforms from "meal prep calculator" to "personalized nutrition planner"
+- Differentiates from basic calorie counters
+- Creates sticky user engagement through personalization
+- Foundation for future premium features
+
+### 🎯 Current Session Focus
+
+Starting with Phase 1: Building the calorie goal calculator with:
+- Swedish localization and user-friendly interface
+- Accurate BMR/TDEE calculations using established formulas
+- Weekly calorie targets (aligns with meal prep mentality)
+- Clear explanatory text for user understanding
+- Integration hooks for goal-based recipe categories
+
+Next sessions will expand into goal-based recipes and complete weekly meal planning system.
+
+---
+
 *This log was created to help maintain context between development sessions and track project progress.*
